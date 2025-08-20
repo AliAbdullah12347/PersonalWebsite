@@ -9,12 +9,19 @@ const TAB_DATA = [
     id: "skills",
     content: (
       <ul className="list-disc pl-2">
-        <li>Node.js</li>
-        <li>Express</li>
-        <li>PostgreSQL</li>
-        <li>Sequelize</li>
         <li>JavaScript</li>
+        <li>Java</li>
+        <li>C</li>
+        <li>Python</li>
         <li>React</li>
+        <li>Next.js</li>
+        <li>Tailwind CSS</li>
+        <li>Supabase</li>
+        <li>Prisma</li>
+        <li>PostgreSQL</li>
+        <li>Unreal Engine</li>
+        <li>Blender</li>
+        <li>Git/Github</li>
       </ul>
     ),
   },
@@ -23,8 +30,9 @@ const TAB_DATA = [
     id: "education",
     content: (
       <ul className="list-disc pl-2">
-        <li>Fullstack Academy of Code</li>
-        <li>University of California, Santa Cruz</li>
+        <li>Colgate University – Computer Science & Applied Mathematics</li>
+        <li>International School Lahore – High School Diploma (A Levels)</li>
+        <li>Aitchison College – High School Diploma (IGCSE & AS Levels)</li>
       </ul>
     ),
   },
@@ -33,8 +41,14 @@ const TAB_DATA = [
     id: "certifications",
     content: (
       <ul className="list-disc pl-2">
-        <li>AWS Cloud Practitioner</li>
-        <li>Google Professional Cloud Developer</li>
+        <li>CS50: Introduction to Computer Science</li>
+        <li>Polygence Research Program: Biases in Judicial AI</li>
+        <li>Data Structures & Algorithms</li>
+        <li>Artificial Intelligence & Machine Learning</li>
+        <li>Computer Systems & Architecture</li>
+        <li>Software Engineering & Full-Stack Development</li>
+        <li>Calculus (Single & Multivariable) & Linear Algebra</li>
+        <li>Probability, Statistics, & Mathematical Modeling</li>
       </ul>
     ),
   },
@@ -57,12 +71,7 @@ const AboutSection = () => {
         <div className="mt-4 md:mt-0 text-left flex flex-col h-full">
           <h2 className="text-4xl font-bold text-white mb-4">About Me</h2>
           <p className="text-base lg:text-lg">
-            I am a full stack web developer with a passion for creating
-            interactive and responsive web applications. I have experience
-            working with JavaScript, React, Redux, Node.js, Express, PostgreSQL,
-            Sequelize, HTML, CSS, and Git. I am a quick learner and I am always
-            looking to expand my knowledge and skill set. I am a team player and
-            I am excited to work with others to create amazing applications.
+            I am a full-stack developer and AI/ML enthusiast with experience building interactive and responsive applications. I work with JavaScript, Python, React, Next.js, Tailwind CSS, Supabase, Prisma, Unreal Engine, and Git. I enjoy learning new technologies, tackling challenging problems, and collaborating on projects that combine creativity with technical precision.
           </p>
           <div className="flex flex-row justify-start mt-8">
             <TabButton

@@ -5,8 +5,26 @@ import ProjectTag from "./ProjectTag";
 import { motion, useInView } from "framer-motion";
 
 const projectsData = [
-  {
+   {
     id: 1,
+    title: "Image Poisoning Web App",
+    description: "A web application that safeguards digital images from unauthorized AI training by injecting invisible, model-disrupting noise.",
+    image: "/images/projects/7.png",
+    tag: ["All", "Web", "AI"],
+    gitUrl: "https://github.com/AliAbdullah12347/Image-Poisoning",
+    previewUrl: "https://image-poisoning.vercel.app/",
+  },
+   {
+    id: 2,
+    title: "Language Learning AI Tutor",
+    description: "A web application that facilitates rapid language acquisition by decomposing complex syntactic structures into intuitive, interactive learning modules.",
+    image: "/images/projects/8.png",
+    tag: ["All", "Web", "AI"],
+    gitUrl: "https://github.com/AliAbdullah12347/Language-Learning-Website",
+    previewUrl: "https://language-learning-website-brown.vercel.app/",
+  },
+  {
+    id: 3,
     title: "Full-Stack Note-Taking AI App",
     description: "Built a full-stack web application using Next.js 15, Supabase, Prisma, Tailwind CSS, and Gemini API for AI-assisted + cloud-synced note-taking and organization.",
     image: "/images/projects/1.png",
@@ -15,7 +33,7 @@ const projectsData = [
     previewUrl: "https://noteshelperapp.vercel.app/",
   },
   {
-    id: 2,
+    id: 4,
     title: "Flappy Bird AI",
     description: "Built an AI agent that learns to play Flappy Bird using reinforcement learning techniques in Python, experimenting with neural networks and training strategies.",
     image: "/images/projects/2.png",
@@ -24,7 +42,7 @@ const projectsData = [
     previewUrl: "https://github.com/AliAbdullah12347/flappyBirdAI",
   },
   {
-    id: 3,
+    id: 5,
     title: "Karaoke Dome Projection Visualizer",
     description: "Created a karaoke lyric display system and audio visualizer compatible with dome projection using Unreal Engine 5.3 and Blueprints.",
     image: "/images/projects/4.png",
@@ -33,7 +51,7 @@ const projectsData = [
     previewUrl: "#",
   },
   {
-    id: 4,
+    id: 6,
     title: "Portfolio Website",
     description: "Developed a personal portfolio website using React and Tailwind CSS to showcase projects and skills.",
     image: "/images/projects/3.png",

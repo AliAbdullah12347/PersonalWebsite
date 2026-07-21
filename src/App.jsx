@@ -24,19 +24,26 @@ function App() {
 
   const scrollToSection = (sectionId) => {
     SoundEffects.playToggle();
-    if (activeTab !== 'dashboard') {
-      setActiveTab('dashboard');
-      setTimeout(() => {
-        const elem = document.getElementById(sectionId);
-        if (elem) {
-          elem.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100);
-    } else {
+    
+    const executeScroll = () => {
       const elem = document.getElementById(sectionId);
       if (elem) {
-        elem.scrollIntoView({ behavior: 'smooth' });
+        const headerOffset = 90;
+        const elementPosition = elem.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
       }
+    };
+
+    if (activeTab !== 'dashboard') {
+      setActiveTab('dashboard');
+      setTimeout(executeScroll, 120);
+    } else {
+      executeScroll();
     }
   };
 
@@ -61,27 +68,22 @@ function App() {
       <div className="bg-radial" />
 
       <div className="hud-container">
-        {/* HEADER */}
+        {/* STICKY SINGLE LINE HEADER */}
         <header className="hud-header">
+          {/* Logo on Left */}
           <div className="hud-logo" onClick={() => scrollToSection('hero')}>
-            <Cpu size={18} className="spinning" />
+            <Cpu size={16} className="spinning" />
             ALI ABDULLAH
-            <span>COLGATE CS</span>
+            <span>COLGATE</span>
           </div>
 
-          {/* Section Navigation Links */}
-          <div className="hud-controls" style={{ flexWrap: 'wrap' }}>
+          {/* Navigation Links in Center (Strictly Single Line) */}
+          <div className="hud-nav-center">
             <button 
               className={`hud-button ${activeTab === 'dashboard' ? 'active' : ''}`}
               onClick={() => handleTabChange('dashboard')}
             >
-              <Layout size={14} /> DASHBOARD
-            </button>
-            <button 
-              className={`hud-button ${activeTab === 'terminal' ? 'active' : ''}`}
-              onClick={() => handleTabChange('terminal')}
-            >
-              <TerminalIcon size={14} /> DECKER SHELL
+              <Layout size={13} /> DASHBOARD
             </button>
 
             <button className="hud-button" onClick={() => scrollToSection('about')}>ABOUT</button>
@@ -89,24 +91,31 @@ function App() {
             <button className="hud-button" onClick={() => scrollToSection('projects')}>PROJECTS</button>
             <button className="hud-button" onClick={() => scrollToSection('skills')}>SKILLS</button>
             <button className="hud-button" onClick={() => scrollToSection('contact')}>CONTACT</button>
+
+            <button 
+              className={`hud-button ${activeTab === 'terminal' ? 'active' : ''}`}
+              onClick={() => handleTabChange('terminal')}
+            >
+              <TerminalIcon size={13} /> SHELL
+            </button>
           </div>
 
-          {/* Audio & CRT Switches */}
-          <div className="hud-controls">
+          {/* Audio & CRT Switches on Right */}
+          <div className="hud-controls-right">
             <button 
               className={`hud-button ${isMuted ? 'accent' : ''}`} 
               onClick={handleMuteToggle}
               title={isMuted ? 'Unmute Audio' : 'Mute Audio'}
               aria-label={isMuted ? 'Unmute Audio' : 'Mute Audio'}
             >
-              {isMuted ? <VolumeX size={14} /> : <Volume2 size={14} />}
+              {isMuted ? <VolumeX size={13} /> : <Volume2 size={13} />}
               <span className="switch-label" style={{ color: 'inherit' }}>
                 {isMuted ? 'MUTED' : 'AUDIO'}
               </span>
             </button>
 
             <div className="switch-group">
-              <span className="switch-label">CRT FX</span>
+              <span className="switch-label">CRT</span>
               <label className="cyber-switch">
                 <input 
                   type="checkbox" 

@@ -6,20 +6,19 @@ export const resumeData = {
   linkedin: "https://www.linkedin.com/in/aliabdullah12347",
   linkedinHandle: "aliabdullah12347",
   vercelUrl: "https://aliabdullah.vercel.app/",
-  gpa: "4.0",
   classOf: "2028",
 
   heroIntro: "Hi, I’m Ali Abdullah, a Colgate University CS & Applied Math student building innovative AI, ML, and full-stack projects that merge creativity with technology.",
 
   aboutText: "I am a full-stack developer and AI/ML enthusiast with experience building interactive and responsive applications. I work with JavaScript, Python, React, Next.js, Tailwind CSS, Supabase, Prisma, Unreal Engine, and Git. I enjoy learning new technologies, tackling challenging problems, and collaborating on projects that combine creativity with technical precision.",
 
-  summaryText: "I am a CS & Applied Math sophomore at Colgate (4.0 GPA) with a deep interest in Artificial Intelligence and Cybersecurity. My work ranges from publishing AI ethics research to building automated vulnerability scanners, working with Kali Linux, and production-level software. I am a relentless learner and a tireless worker, seeking a team where I can tackle hard technical problems and expand my security expertise. Seeking: Summer 2026 Software Engineering or AI/Cybersecurity internships.",
+  summaryText: "I am a CS & Applied Math sophomore at Colgate with a deep interest in Artificial Intelligence and Cybersecurity. My work ranges from publishing AI ethics research to building automated vulnerability scanners, working with Kali Linux, and production-level software. I am a relentless learner and a tireless worker, seeking a team where I can tackle hard technical problems and expand my security expertise. Seeking: Summer 2026 Software Engineering or AI/Cybersecurity internships.",
 
   stats: [
-    { label: "GPA", value: "4.0" },
     { label: "Class Of", value: "2028" },
     { label: "Projects", value: "6" },
-    { label: "Scholar", value: "Alumni Memorial '28" }
+    { label: "Scholar", value: "Alumni Memorial '28" },
+    { label: "Focus", value: "AI & Cyber" }
   ],
 
   experience: [
@@ -105,7 +104,7 @@ export const resumeData = {
       institution: "Colgate University",
       degree: "Bachelor of Arts, Computer Science & Applied Math",
       period: "August 2024 - May 2028",
-      details: "4.0 GPA · Alumni Memorial Scholar ’28"
+      details: "Alumni Memorial Scholar ’28"
     },
     {
       institution: "International School Lahore",

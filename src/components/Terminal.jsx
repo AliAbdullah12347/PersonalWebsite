@@ -7,7 +7,7 @@ const Terminal = () => {
   const [history, setHistory] = useState([
     { text: 'SEC-OPS CORE COMMAND SHELL // VER 4.9.0', type: 'accent' },
     { text: `COLGATE UNIVERSITY DECKER SESSION: ${resumeData.name.toUpperCase()}`, type: 'info' },
-    { text: 'STATUS: GPA 4.0 // ALUMNI MEMORIAL SCHOLAR ’28', type: 'info' },
+    { text: 'STATUS: ALUMNI MEMORIAL SCHOLAR ’28', type: 'info' },
     { text: 'Type "help" to view list of available shell commands.', type: 'output' },
   ]);
   const [inputVal, setInputVal] = useState('');
@@ -80,7 +80,7 @@ const Terminal = () => {
           ...prev,
           { text: '==================================================', type: 'output' },
           { text: 'AVAILABLE COMMANDS:', type: 'accent' },
-          { text: '  about        Display student profile, GPA, and research focus.', type: 'output' },
+          { text: '  about        Display student profile and research focus.', type: 'output' },
           { text: '  projects     List all projects.', type: 'output' },
           { text: '  view <id>    View detailed dossier for a project (e.g. "view 1").', type: 'output' },
           { text: '  skills       List programming languages, tools, and platforms.', type: 'output' },
@@ -96,7 +96,7 @@ const Terminal = () => {
           ...prev,
           { text: `--- DOSSIER: ${resumeData.name.toUpperCase()} ---`, type: 'accent' },
           { text: `EDUCATION: Colgate University (BA Computer Science & Applied Math)`, type: 'output' },
-          { text: `ACADEMICS: GPA 4.0 // Alumni Memorial Scholar '28`, type: 'info' },
+          { text: `ACADEMICS: Alumni Memorial Scholar '28`, type: 'info' },
           { text: `EXPERIENCE: Immersive Visualization Dev @ Colgate // TA Python // Alterea Inc Intern // Polygence AI Ethics Researcher`, type: 'output' },
           { text: `HONORS: IMO Bronze, AMO Gold, Cambridge High Achievement Award`, type: 'output' },
           { text: `SUMMARY: ${resumeData.summaryText}`, type: 'output' },

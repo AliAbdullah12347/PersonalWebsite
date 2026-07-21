@@ -3,9 +3,9 @@ import { projectsData } from '../data/projectsData';
 import { resumeData } from '../data/resumeData';
 import { SoundEffects } from '../utils/SoundEffects';
 import { 
-  Shield, Cpu, Award, RefreshCw, Layers, ExternalLink, 
-  Mail, Linkedin, Github, BookOpen, GraduationCap, Briefcase, 
-  Send, User, CheckCircle, Code, Globe
+  Shield, Cpu, Award, RefreshCw, Layers, 
+  Mail, Linkedin, Github, GraduationCap, Briefcase, 
+  Send, User, Code
 } from 'lucide-react';
 
 const Dashboard = ({ onSelectProject }) => {
@@ -14,16 +14,15 @@ const Dashboard = ({ onSelectProject }) => {
   const [cpuUsage, setCpuUsage] = useState(38);
   const [ramUsage, setRamUsage] = useState(58);
 
-  // Form state for contact form
   const [emailForm, setEmailForm] = useState({ email: '', subject: '', message: '' });
   const [formSent, setFormSent] = useState(false);
 
   useEffect(() => {
     const initialLogs = [
-      { id: 1, time: '17:58:00', text: 'Colgate CS & Applied Math Core Node: ONLINE', type: 'normal' },
-      { id: 2, time: '17:58:04', text: 'GPA 4.0 Verification Hash: 0x4000_COLGATE', type: 'normal' },
-      { id: 3, time: '17:58:10', text: 'Stanford-affiliated Polygence AI Research indexed.', type: 'normal' },
-      { id: 4, time: '17:58:15', text: 'Unreal Engine 5 3D Rendering Pipeline: 60 FPS', type: 'normal' },
+      { id: 1, time: '18:01:00', text: 'Colgate CS & Applied Math Core Node: ONLINE', type: 'normal' },
+      { id: 2, time: '18:01:04', text: 'Verification Hash: 0xCOLGATE_CS_AI', type: 'normal' },
+      { id: 3, time: '18:01:10', text: 'Stanford-affiliated Polygence AI Research indexed.', type: 'normal' },
+      { id: 4, time: '18:01:15', text: 'Unreal Engine 5 3D Rendering Pipeline: 60 FPS', type: 'normal' },
     ];
     setLogs(initialLogs);
 
@@ -42,7 +41,6 @@ const Dashboard = ({ onSelectProject }) => {
     SoundEffects.playSuccess();
     setFormSent(true);
     
-    // Construct mailto fallback so user can actually send the message directly
     const mailtoUrl = `mailto:${resumeData.email}?subject=${encodeURIComponent(emailForm.subject || 'Portfolio Contact')}&body=${encodeURIComponent(`From: ${emailForm.email}\n\n${emailForm.message}`)}`;
     window.open(mailtoUrl, '_blank');
 
@@ -50,6 +48,14 @@ const Dashboard = ({ onSelectProject }) => {
       setFormSent(false);
       setEmailForm({ email: '', subject: '', message: '' });
     }, 5000);
+  };
+
+  const scrollToSection = (id) => {
+    SoundEffects.playToggle();
+    const elem = document.getElementById(id);
+    if (elem) {
+      elem.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const filteredProjects = filter === 'ALL' 
@@ -64,7 +70,7 @@ const Dashboard = ({ onSelectProject }) => {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-neon-cyan)', fontSize: '0.85rem', fontFamily: 'var(--font-heading)', letterSpacing: '1px' }}>
             <Cpu size={16} className="spinning" />
-            <span>ALUMNI MEMORIAL SCHOLAR ’28 // GPA 4.0</span>
+            <span>ALUMNI MEMORIAL SCHOLAR ’28 // COLGATE CS & APPLIED MATH</span>
           </div>
 
           <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', color: 'var(--color-text)', lineHeight: '1.2' }}>
@@ -77,13 +83,12 @@ const Dashboard = ({ onSelectProject }) => {
 
           {/* Quick CTA Actions */}
           <div style={{ display: 'flex', gap: 'var(--space-md)', marginTop: 'var(--space-sm)', flexWrap: 'wrap' }}>
-            <a 
-              href="#contact" 
+            <button 
               className="hud-button active"
-              onClick={() => SoundEffects.playToggle()}
+              onClick={() => scrollToSection('contact')}
             >
               <Mail size={16} /> Get in Touch!
-            </a>
+            </button>
             <a 
               href={resumeData.linkedin} 
               target="_blank" 
@@ -199,7 +204,6 @@ const Dashboard = ({ onSelectProject }) => {
           </span>
         </div>
         <div className="panel-body">
-          {/* Tag filters */}
           <div className="projects-header-controls">
             <div className="filter-tags">
               {['ALL', 'AI', 'FULL-STACK', 'GRAPHICS', 'SECURITY', 'WEB DEV'].map((cat) => (
@@ -221,7 +225,6 @@ const Dashboard = ({ onSelectProject }) => {
             </div>
           </div>
 
-          {/* Project Bento Cards Grid */}
           <div className="project-grid-bento">
             {filteredProjects.map((p) => (
               <div 
@@ -259,7 +262,6 @@ const Dashboard = ({ onSelectProject }) => {
       {/* 5. SKILLS, EDUCATION & CERTIFICATIONS GRID */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 'var(--space-md)' }}>
         
-        {/* SKILLS PANEL */}
         <section id="skills" className="cyber-panel cut-corners">
           <div className="panel-header">
             <div className="title">
@@ -286,7 +288,6 @@ const Dashboard = ({ onSelectProject }) => {
           </div>
         </section>
 
-        {/* EDUCATION PANEL */}
         <section className="cyber-panel cut-corners">
           <div className="panel-header">
             <div className="title">
@@ -318,7 +319,6 @@ const Dashboard = ({ onSelectProject }) => {
           </div>
         </section>
 
-        {/* CERTIFICATIONS & HONORS PANEL */}
         <section className="cyber-panel cut-corners">
           <div className="panel-header">
             <div className="title">
@@ -375,7 +375,6 @@ const Dashboard = ({ onSelectProject }) => {
         </div>
         <div className="panel-body" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 'var(--space-xl)' }}>
           
-          {/* Info Side */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
             <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.2rem', color: 'var(--color-neon-cyan)' }}>
               Open for Opportunities
@@ -413,7 +412,6 @@ const Dashboard = ({ onSelectProject }) => {
             </div>
           </div>
 
-          {/* Contact Form */}
           <form onSubmit={handleFormSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
             <div className="sys-stat-item">
               <label className="sys-stat-label" htmlFor="user-email">Your Email</label>

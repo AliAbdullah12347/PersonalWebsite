@@ -22,6 +22,24 @@ function App() {
     setActiveTab(tab);
   };
 
+  const scrollToSection = (sectionId) => {
+    SoundEffects.playToggle();
+    if (activeTab !== 'dashboard') {
+      setActiveTab('dashboard');
+      setTimeout(() => {
+        const elem = document.getElementById(sectionId);
+        if (elem) {
+          elem.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    } else {
+      const elem = document.getElementById(sectionId);
+      if (elem) {
+        elem.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
   const handleCrtToggle = () => {
     SoundEffects.playToggle();
     setCrtActive(!crtActive);
@@ -45,10 +63,10 @@ function App() {
       <div className="hud-container">
         {/* HEADER */}
         <header className="hud-header">
-          <div className="hud-logo" onClick={() => handleTabChange('dashboard')}>
+          <div className="hud-logo" onClick={() => scrollToSection('hero')}>
             <Cpu size={18} className="spinning" />
             ALI ABDULLAH
-            <span>4.0 GPA</span>
+            <span>COLGATE CS</span>
           </div>
 
           {/* Section Navigation Links */}
@@ -66,15 +84,11 @@ function App() {
               <TerminalIcon size={14} /> DECKER SHELL
             </button>
 
-            {activeTab === 'dashboard' && (
-              <>
-                <a href="#about" className="hud-button" onClick={() => SoundEffects.playToggle()}>ABOUT</a>
-                <a href="#experience" className="hud-button" onClick={() => SoundEffects.playToggle()}>EXPERIENCE</a>
-                <a href="#projects" className="hud-button" onClick={() => SoundEffects.playToggle()}>PROJECTS</a>
-                <a href="#skills" className="hud-button" onClick={() => SoundEffects.playToggle()}>SKILLS</a>
-                <a href="#contact" className="hud-button" onClick={() => SoundEffects.playToggle()}>CONTACT</a>
-              </>
-            )}
+            <button className="hud-button" onClick={() => scrollToSection('about')}>ABOUT</button>
+            <button className="hud-button" onClick={() => scrollToSection('experience')}>EXPERIENCE</button>
+            <button className="hud-button" onClick={() => scrollToSection('projects')}>PROJECTS</button>
+            <button className="hud-button" onClick={() => scrollToSection('skills')}>SKILLS</button>
+            <button className="hud-button" onClick={() => scrollToSection('contact')}>CONTACT</button>
           </div>
 
           {/* Audio & CRT Switches */}

@@ -3,7 +3,6 @@ import { X, ShieldAlert, Cpu, Database, Eye, Terminal } from 'lucide-react';
 import { SoundEffects } from '../utils/SoundEffects';
 
 const ProjectModal = ({ project, onClose }) => {
-  // Play alert sound on open
   useEffect(() => {
     if (project) {
       SoundEffects.playAlert();
@@ -12,7 +11,6 @@ const ProjectModal = ({ project, onClose }) => {
 
   if (!project) return null;
 
-  // Mock STRIDE threat model data based on project type
   const threatModel = project.threatModel || {
     spoofing: 2,
     tampering: 3,
@@ -49,7 +47,7 @@ const ProjectModal = ({ project, onClose }) => {
             </div>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <span className="threat-level-badge">THREAT RATING: EXTREME</span>
+            <span className="threat-level-badge">VERIFIED REPO</span>
             <button className="modal-close-btn" onClick={onClose} aria-label="Close modal">
               <X size={16} />
             </button>
@@ -65,12 +63,15 @@ const ProjectModal = ({ project, onClose }) => {
               <span className="sys-stat-value" style={{ color: 'var(--color-neon-cyan)' }}>{project.category}</span>
             </div>
             <div className="sys-stat-item">
-              <span className="sys-stat-label">System Architecture</span>
-              <span className="sys-stat-value">Neural Network / Encrypted Hub</span>
-            </div>
-            <div className="sys-stat-item">
-              <span className="sys-stat-label">Deployment Hash</span>
-              <span className="sys-stat-value" style={{ fontSize: '0.7rem', fontFamily: 'var(--font-body)' }}>SHA256::0x4f...8a9c</span>
+              <span className="sys-stat-label">GitHub Repository</span>
+              <a 
+                href={project.github} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ color: 'var(--color-neon-green)', fontSize: '0.75rem', fontFamily: 'var(--font-body)', textDecoration: 'none' }}
+              >
+                {project.github.replace('https://github.com/', '')}
+              </a>
             </div>
           </div>
 
@@ -114,7 +115,7 @@ const ProjectModal = ({ project, onClose }) => {
             </div>
           </div>
 
-          {/* Architecture Block Diagram (CSS Flexbox boxes) */}
+          {/* Architecture Block Diagram */}
           <div>
             <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '0.9rem', color: 'var(--color-neon-cyan)', marginBottom: '8px', textTransform: 'uppercase' }}>
               // System Architecture Block Flow
@@ -128,7 +129,7 @@ const ProjectModal = ({ project, onClose }) => {
                 <div className="arch-connector">&gt;&gt;</div>
                 <div className="arch-node active" style={{ borderColor: 'var(--color-neon-magenta)' }}>
                   <Cpu size={14} style={{ color: 'var(--color-neon-magenta)', marginBottom: '4px', display: 'block', margin: '0 auto 4px auto' }} />
-                  {project.category === 'AI' ? 'AI Inference Core' : 'Decryption Engine'}
+                  {project.category.includes('AI') ? 'AI Inference Core' : 'Security Engine'}
                 </div>
                 <div className="arch-connector">&gt;&gt;</div>
                 <div className="arch-node">
@@ -138,18 +139,6 @@ const ProjectModal = ({ project, onClose }) => {
               </div>
             </div>
           </div>
-
-          {/* Mitigation Details */}
-          <div>
-            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '0.9rem', color: 'var(--color-neon-green)', marginBottom: '8px', textTransform: 'uppercase' }}>
-              // Implemented Mitigations
-            </h3>
-            <ul style={{ paddingLeft: '20px', fontSize: '0.8rem', color: 'var(--color-text)', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              <li><strong>Zero-Trust Architecture:</strong> Enforces continuous authentication on every node endpoint.</li>
-              <li><strong>AES-GCM-256 Envelope Encryption:</strong> Data encrypted locally before socket transportation.</li>
-              <li><strong>Model Evasion Protections:</strong> Adversarial noise injection checks protect input vectors from AI exploitation.</li>
-            </ul>
-          </div>
         </div>
 
         {/* Modal Footer */}
@@ -158,20 +147,24 @@ const ProjectModal = ({ project, onClose }) => {
             className="hud-button" 
             onClick={() => {
               SoundEffects.playToggle();
-              window.open(project.github || 'https://github.', '_blank');
+              window.open(project.github, '_blank');
             }}
           >
             &lt;/&gt; SOURCE CODE
           </button>
-          <button 
-            className="hud-button active" 
-            onClick={() => {
-              SoundEffects.playSuccess();
-              alert(`Initializing simulated sandbox node for ${project.title}... Sandbox active!`);
-            }}
-          >
-            <Eye size={14} /> LIVE NODE
-          </button>
+
+          {/* Only render Live Node button if liveUrl is valid */}
+          {project.liveUrl && (
+            <button 
+              className="hud-button active" 
+              onClick={() => {
+                SoundEffects.playSuccess();
+                window.open(project.liveUrl, '_blank');
+              }}
+            >
+              <Eye size={14} /> LIVE NODE
+            </button>
+          )}
         </div>
       </div>
     </div>

@@ -28,7 +28,7 @@ function App() {
     const executeScroll = () => {
       const elem = document.getElementById(sectionId);
       if (elem) {
-        const headerOffset = 90;
+        const headerOffset = 70;
         const elementPosition = elem.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
@@ -62,7 +62,11 @@ function App() {
   };
 
   return (
-    <div className={`crt-scanlines ${crtActive ? 'crt-overlay' : ''}`}>
+    <div className="app-root">
+      {/* Standalone CRT screen scanline overlay - DOES NOT WRAP DOM */}
+      {crtActive && <div className="crt-overlay" />}
+
+      {/* Canvas Matrix Overlay & Grids */}
       <MatrixBackground />
       <div className="bg-grid" />
       <div className="bg-radial" />

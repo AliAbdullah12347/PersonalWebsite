@@ -35,9 +35,6 @@
   --glow-green: 0 0 10px rgba(0, 255, 102, 0.35), 0 0 20px rgba(0, 255, 102, 0.15);
   --glow-magenta: 0 0 10px rgba(255, 0, 127, 0.35), 0 0 20px rgba(255, 0, 127, 0.15);
   --panel-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-
-  /* FX State */
-  --scanline-opacity: 0.06;
 }
 
 /* Global Reset & Base */
@@ -61,6 +58,13 @@ body {
   overflow-x: hidden;
   min-height: 100vh;
   width: 100%;
+  position: relative;
+}
+
+.app-root {
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
 }
 
 /* Scrollbars */
@@ -81,7 +85,7 @@ body {
   box-shadow: var(--glow-cyan);
 }
 
-/* Immersive CRT scanline overlay */
+/* Standalone CRT Overlay - MUST NOT wrap layout elements */
 .crt-overlay {
   position: fixed;
   top: 0;
@@ -101,35 +105,6 @@ body {
   z-index: 9999;
   pointer-events: none;
   opacity: 0.85;
-}
-
-.crt-scanlines::before {
-  content: " ";
-  display: block;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
-  z-index: 9998;
-  background-size: 100% 3px, 3px 100%;
-  pointer-events: none;
-}
-
-.crt-scanlines::after {
-  content: " ";
-  display: block;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background: rgba(18, 16, 16, 0.1);
-  opacity: 0;
-  z-index: 9998;
-  pointer-events: none;
-  animation: crt-flicker 0.15s infinite;
 }
 
 /* Animations */
@@ -215,7 +190,7 @@ body {
 /* STICKY SINGLE LINE TOP NAVIGATION BAR */
 .hud-header {
   position: sticky;
-  top: 12px;
+  top: 0;
   z-index: 500;
   border: 1px solid var(--color-border);
   background: var(--bg-panel-header);
@@ -272,11 +247,11 @@ body {
   flex-wrap: nowrap;
   overflow-x: auto;
   white-space: nowrap;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 .hud-nav-center::-webkit-scrollbar {
-  display: none; /* Chrome/Safari */
+  display: none;
 }
 
 .hud-controls-right {
@@ -287,12 +262,12 @@ body {
   white-space: nowrap;
 }
 
-/* Compact Buttons for single-line fit */
+/* Buttons */
 .hud-button {
   background: transparent;
   border: 1px solid var(--color-border);
   color: var(--color-text);
-  padding: 5px 10px;
+  padding: 6px 12px;
   font-family: var(--font-body);
   font-size: 0.78rem;
   cursor: pointer;
@@ -816,7 +791,7 @@ input:checked + .switch-slider:before {
   gap: var(--space-md);
 }
 
-/* Media Queries for Responsive Single Line Header */
+/* Media Queries for Mobile */
 @media (max-width: 768px) {
   .hud-header {
     padding: 6px 10px;

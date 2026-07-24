@@ -5,6 +5,8 @@ import Terminal from './components/Terminal';
 import ProjectModal from './components/ProjectModal';
 import { SoundEffects } from './utils/SoundEffects';
 import { Terminal as TerminalIcon, Layout, Volume2, VolumeX, Cpu } from 'lucide-react';
+import { Analytics } from '@vercel/analytics/react';
+
 
 function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -63,6 +65,7 @@ function App() {
 
   return (
     <div className="app-root">
+      <Analytics />
       {/* Standalone CRT screen scanline overlay - DOES NOT WRAP DOM */}
       {crtActive && <div className="crt-overlay" />}
 

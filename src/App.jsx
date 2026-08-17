@@ -97,6 +97,7 @@ function App() {
             <button className="hud-button" onClick={() => scrollToSection('experience')}>EXPERIENCE</button>
             <button className="hud-button" onClick={() => scrollToSection('projects')}>PROJECTS</button>
             <button className="hud-button" onClick={() => scrollToSection('skills')}>SKILLS</button>
+            <button className="hud-button" onClick={() => scrollToSection('hobbies')}>HOBBIES</button>
             <button className="hud-button" onClick={() => scrollToSection('contact')}>CONTACT</button>
 
             <button 

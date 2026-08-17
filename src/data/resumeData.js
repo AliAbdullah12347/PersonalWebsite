@@ -141,6 +141,26 @@ export const resumeData = {
     { name: "Hindi", level: "Full Professional" },
     { name: "Punjabi", level: "Professional Working" },
     { name: "Arabic", level: "Limited Working" },
-    { name: "Chinese", level: "Elementary" }
+  ],
+  hobbies: [
+    {
+      name: "Table Tennis",
+      focus: true,
+      description: "An avid table tennis player focusing on high-speed spin control and aggressive offensive loops. The rapid reflex arcs and split-second tactical calculations on the table mirrors the microsecond decisions required when optimizing algorithms."
+    },
+    {
+      name: "Urdu Poetry",
+      focus: true,
+      description: "Deeply passionate about classical Urdu Ghazals, studying complex rhythmic meters (baher) and symbolic metaphors of poets like Mirza Ghalib and Allama Iqbal. To me, a beautifully balanced couplet carries the same elegance as a perfectly engineered recursive function.",
+      couplet: "ہزاروں خواہشیں ایسی کہ ہر خواہش پہ دم نکلے\nبہت نکلے میرے ارمان لیکن پھر بھی کم نکلے"
+    },
+    { name: "Badminton" },
+    { name: "Travelling" },
+    { name: "UFC" },
+    { name: "Fragrance Collection" },
+    { name: "Cricket" },
+    { name: "3D Modelling & Animation" },
+    { name: "Language Learning" }
   ]
 };
+

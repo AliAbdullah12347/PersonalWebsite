@@ -5,8 +5,9 @@ import { SoundEffects } from '../utils/SoundEffects';
 import { 
   Shield, Cpu, Award, RefreshCw, Layers, 
   Mail, Linkedin, Github, GraduationCap, Briefcase, 
-  Send, User, Code
+  Send, User, Code, Heart
 } from 'lucide-react';
+
 
 const Dashboard = ({ onSelectProject }) => {
   const [filter, setFilter] = useState('ALL');
@@ -364,6 +365,84 @@ const Dashboard = ({ onSelectProject }) => {
           </div>
         </section>
       </div>
+
+      {/* HOBBIES SECTION */}
+      <section id="hobbies" className="cyber-panel cut-corners">
+        <div className="panel-header">
+          <div className="title">
+            <Heart size={16} color="var(--color-neon-magenta)" />
+            <span>Hobbies & Passions</span>
+          </div>
+          <span style={{ fontSize: '0.75rem', color: 'var(--color-neon-cyan)' }}>PERSONAL DIRECTORY</span>
+        </div>
+        <div className="panel-body" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-lg)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 'var(--space-md)' }}>
+            
+            {/* Table Tennis */}
+            <div style={{ background: 'rgba(6, 6, 10, 0.4)', border: '1px solid var(--color-border)', padding: 'var(--space-md)' }}>
+              <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '0.95rem', color: 'var(--color-neon-cyan)', marginBottom: '8px', textTransform: 'uppercase' }}>
+                🏓 Table Tennis
+              </h3>
+              <p style={{ fontSize: '0.85rem', color: 'var(--color-text)', lineHeight: '1.6' }}>
+                {resumeData.hobbies.find(h => h.name === 'Table Tennis').description}
+              </p>
+            </div>
+
+            {/* Urdu Poetry */}
+            <div style={{ background: 'rgba(6, 6, 10, 0.4)', border: '1px solid var(--color-border)', padding: 'var(--space-md)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              <div>
+                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '0.95rem', color: 'var(--color-neon-magenta)', marginBottom: '8px', textTransform: 'uppercase' }}>
+                  ✍️ Urdu Poetry & Ghazals
+                </h3>
+                <p style={{ fontSize: '0.85rem', color: 'var(--color-text)', lineHeight: '1.6', marginBottom: '12px' }}>
+                  {resumeData.hobbies.find(h => h.name === 'Urdu Poetry').description}
+                </p>
+              </div>
+              <div style={{ 
+                borderTop: '1px dashed var(--color-border)', 
+                paddingTop: '12px', 
+                textAlign: 'right', 
+                fontSize: '1.15rem', 
+                color: 'var(--color-neon-green)',
+                direction: 'rtl',
+                lineHeight: '1.8',
+                fontFamily: 'serif'
+              }}>
+                ہزاروں خواہشیں ایسی کہ ہر خواہش پہ دم نکلے<br />
+                بہت نکلے میرے ارمان لیکن پھر بھی کم نکلے
+              </div>
+              <div style={{ fontSize: '0.7rem', color: 'var(--color-text-muted)', marginTop: '4px', textAlign: 'right' }}>
+                — Mirza Ghalib
+              </div>
+            </div>
+
+          </div>
+
+          {/* Other Passions */}
+          <div>
+            <h4 style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', textTransform: 'uppercase', marginBottom: '8px', letterSpacing: '1px' }}>
+              Other Core Passions
+            </h4>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+              {resumeData.hobbies.filter(h => !h.focus).map((hobby) => (
+                <span 
+                  key={hobby.name}
+                  style={{
+                    border: '1px solid var(--color-border)',
+                    background: 'rgba(255, 0, 127, 0.03)',
+                    color: 'var(--color-text)',
+                    padding: '4px 10px',
+                    fontSize: '0.8rem',
+                    fontFamily: 'var(--font-body)'
+                  }}
+                >
+                  {hobby.name}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* 6. CONTACT SECTION */}
       <section id="contact" className="cyber-panel cut-corners">

@@ -57,7 +57,7 @@ export const resumeData = {
       company: "Alterea, Inc.",
       roles: [
         {
-          title: "Game Development Intern",
+          title: "Software Engineering Intern",
           period: "January 2026 - May 2026",
           location: "United States",
           bullets: [

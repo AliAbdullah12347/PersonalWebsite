@@ -16,10 +16,10 @@ export const resumeData = {
 
   stats: [
     { label: "Class Of", value: "2028" },
-    { label: "Projects", value: "6" },
     { label: "Scholar", value: "Alumni Memorial '28" },
     { label: "Focus", value: "AI & Cyber" }
   ],
+
 
   experience: [
     {
@@ -61,7 +61,9 @@ export const resumeData = {
           period: "January 2026 - May 2026",
           location: "United States",
           bullets: [
-            "Participating in core game architecture development and interactive mechanics implementation."
+            "Achieved a 30% increase in build stability through resolving critical C# logic errors in the physics engine and UI state-machine systems, using internal logging tools to catch regressions before release",
+            "Caught 25+ edge-case failures across physics and input-handling systems through rigorous QA and regression testing, keeping gameplay mechanics at production standard",
+            "Managed the full bug lifecycle across 60+ tickets in Git-based version control, cutting average resolution time by 20%"
           ]
         }
       ]

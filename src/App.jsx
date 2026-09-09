@@ -9,6 +9,28 @@ import { Terminal as TerminalIcon, Layout, Volume2, VolumeX, Cpu } from 'lucide-
 import { Analytics } from '@vercel/analytics/react';
 
 
+// Visitor preferences survive a reload. Wrapped because storage throws in
+// private-mode and sandboxed contexts, where the defaults are fine.
+const PREF_KEY = 'ali-hud-prefs';
+
+function readPref(key, fallback) {
+  try {
+    const stored = JSON.parse(localStorage.getItem(PREF_KEY) || '{}');
+    return typeof stored[key] === 'boolean' ? stored[key] : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function writePref(key, value) {
+  try {
+    const stored = JSON.parse(localStorage.getItem(PREF_KEY) || '{}');
+    localStorage.setItem(PREF_KEY, JSON.stringify({ ...stored, [key]: value }));
+  } catch {
+    // Preference simply will not persist; not worth surfacing.
+  }
+}
+
 // Dashboard sections, in document order — drives both the nav strip and the
 // scroll-spy highlight below.
 const SECTIONS = [
@@ -24,14 +46,16 @@ const SPY_IDS = ['hero', ...SECTIONS.map((s) => s.id)];
 
 function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
-  const [crtActive, setCrtActive] = useState(true);
-  const [isMuted, setIsMuted] = useState(false);
+  const [crtActive, setCrtActive] = useState(() => readPref('crt', true));
+  const [isMuted, setIsMuted] = useState(() => readPref('muted', false));
   const [selectedProject, setSelectedProject] = useState(null);
   const [activeSection, setActiveSection] = useState('hero');
 
   useEffect(() => {
-    SoundEffects.setMuted(false);
-    SoundEffects.playBoot();
+    SoundEffects.setMuted(isMuted);
+    if (!isMuted) SoundEffects.playBoot();
+    // Boot chime is intentionally once-per-mount, not on every mute change
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Highlight whichever section the reader is actually looking at. Throttled
@@ -103,13 +127,17 @@ function App() {
 
   const handleCrtToggle = () => {
     SoundEffects.playToggle();
-    setCrtActive(!crtActive);
+    setCrtActive((prev) => {
+      writePref('crt', !prev);
+      return !prev;
+    });
   };
 
   const handleMuteToggle = () => {
     const nextMuted = !isMuted;
     setIsMuted(nextMuted);
     SoundEffects.setMuted(nextMuted);
+    writePref('muted', nextMuted);
     if (!nextMuted) {
       SoundEffects.playToggle();
     }

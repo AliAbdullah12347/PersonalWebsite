@@ -269,6 +269,26 @@ body {
   }
 }
 
+/* Prose measure. Every paragraph and bullet on the page was running to
+   133-146 characters per line at desktop — roughly double a comfortable
+   measure, which is what made the resume sections read as walls of text.
+   max-width only ever constrains, so narrow containers (project cards,
+   hobby cards, the honors columns) are unaffected. */
+.panel-body p,
+.panel-body li,
+.summary-callout {
+  max-width: 78ch;
+}
+
+.summary-callout {
+  background: rgba(6, 6, 10, 0.6);
+  border-left: 3px solid var(--color-neon-cyan);
+  padding: var(--space-md);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  line-height: 1.7;
+}
+
 /* Hero lead: capped by character count rather than a pixel width, which ran
    to ~84 characters per line at desktop — well past a comfortable measure. */
 .hero-lead {

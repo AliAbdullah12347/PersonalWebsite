@@ -195,16 +195,7 @@ ${emailForm.message}`)}`;
             {resumeData.aboutText}
           </p>
 
-          <div 
-            style={{ 
-              background: 'rgba(6, 6, 10, 0.6)', 
-              borderLeft: '3px solid var(--color-neon-cyan)', 
-              padding: 'var(--space-md)',
-              fontSize: 'var(--text-sm)',
-              color: 'var(--color-text)',
-              lineHeight: '1.6'
-            }}
-          >
+          <div className="summary-callout">
             <strong>Executive Summary:</strong> {resumeData.summaryText}
           </div>
         </div>

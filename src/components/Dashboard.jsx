@@ -178,7 +178,7 @@ ${emailForm.message}`)}`;
                       </span>
                     </div>
 
-                    <ul style={{ marginTop: '8px', paddingLeft: '16px', fontSize: '0.85rem', color: 'var(--color-text-muted)', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                    <ul className="hud-list" style={{ marginTop: '8px', fontSize: '0.85rem', color: 'var(--color-text-muted)', display: 'flex', flexDirection: 'column', gap: '6px' }}>
                       {role.bullets.map((b, bIdx) => (
                         <li key={bIdx}>{b}</li>
                       ))}
@@ -192,7 +192,7 @@ ${emailForm.message}`)}`;
       </section>
 
       {/* 4. MY PROJECTS SECTION */}
-      <section id="projects" className="cyber-panel">
+      <section id="projects" className="cyber-panel cut-corners">
         <div className="panel-header">
           <div className="title">
             <Layers size={16} />
@@ -284,19 +284,7 @@ ${emailForm.message}`)}`;
           </div>
           <div className="panel-body" style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
             {resumeData.skills.map((skill) => (
-              <span 
-                key={skill}
-                style={{
-                  border: '1px solid var(--color-border)',
-                  background: 'rgba(0, 240, 255, 0.05)',
-                  color: 'var(--color-neon-cyan)',
-                  padding: '6px 12px',
-                  fontSize: '0.85rem',
-                  fontFamily: 'var(--font-body)'
-                }}
-              >
-                {skill}
-              </span>
+              <span key={skill} className="skill-chip">{skill}</span>
             ))}
           </div>
         </section>
@@ -344,7 +332,7 @@ ${emailForm.message}`)}`;
               <h4 style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', textTransform: 'uppercase', marginBottom: '6px' }}>
                 Certifications
               </h4>
-              <ul style={{ paddingLeft: '16px', fontSize: '0.85rem', color: 'var(--color-text)' }}>
+              <ul className="hud-list" style={{ fontSize: '0.85rem', color: 'var(--color-text)' }}>
                 {resumeData.certifications.map((c, i) => (
                   <li key={i}>{c}</li>
                 ))}
@@ -355,7 +343,7 @@ ${emailForm.message}`)}`;
               <h4 style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', textTransform: 'uppercase', marginBottom: '6px' }}>
                 Honors & Awards
               </h4>
-              <ul style={{ paddingLeft: '16px', fontSize: '0.8rem', color: 'var(--color-neon-cyan)', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              <ul className="hud-list" style={{ fontSize: '0.8rem', color: 'var(--color-neon-cyan)', display: 'flex', flexDirection: 'column', gap: '4px' }}>
                 {resumeData.honors.map((h, i) => (
                   <li key={i}>{h}</li>
                 ))}
@@ -433,19 +421,7 @@ ${emailForm.message}`)}`;
             </h4>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
               {resumeData.hobbies.filter(h => !h.focus).map((hobby) => (
-                <span 
-                  key={hobby.name}
-                  style={{
-                    border: '1px solid var(--color-border)',
-                    background: 'rgba(255, 0, 127, 0.03)',
-                    color: 'var(--color-text)',
-                    padding: '4px 10px',
-                    fontSize: '0.8rem',
-                    fontFamily: 'var(--font-body)'
-                  }}
-                >
-                  {hobby.name}
-                </span>
+                <span key={hobby.name} className="skill-chip accent">{hobby.name}</span>
               ))}
             </div>
           </div>

@@ -751,6 +751,60 @@ input:checked + .switch-slider:before {
   background: rgba(0,0,0,0.2);
 }
 
+/* Bullet lists — the browser's default grey disc reads as unstyled markup
+   against the HUD chrome, so lists get a cyan chevron marker instead. */
+.hud-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.hud-list li {
+  position: relative;
+  padding-left: 18px;
+}
+
+.hud-list li::before {
+  content: "\25B8";
+  position: absolute;
+  left: 2px;
+  top: 0;
+  color: var(--color-neon-cyan);
+  opacity: 0.65;
+}
+
+/* Chips — skills and interests. Previously inline-styled spans with no hover
+   state at all, so they read as inert labels rather than part of the HUD. */
+.skill-chip {
+  border: 1px solid var(--color-border);
+  background: rgba(0, 240, 255, 0.05);
+  color: var(--color-neon-cyan);
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  font-family: var(--font-body);
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.skill-chip:hover {
+  border-color: var(--color-neon-cyan);
+  background: rgba(0, 240, 255, 0.12);
+  transform: translateY(-2px);
+  box-shadow: var(--glow-cyan);
+}
+
+.skill-chip.accent {
+  background: rgba(255, 0, 127, 0.04);
+  color: var(--color-text);
+  padding: 4px 10px;
+  font-size: 0.8rem;
+}
+
+.skill-chip.accent:hover {
+  border-color: var(--color-neon-magenta);
+  background: rgba(255, 0, 127, 0.12);
+  color: var(--color-neon-magenta);
+  box-shadow: var(--glow-magenta);
+}
+
 /* Hobbies */
 .hobby-card {
   background: rgba(6, 6, 10, 0.4);

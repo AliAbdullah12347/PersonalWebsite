@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { projectsData } from '../data/projectsData';
 import { resumeData } from '../data/resumeData';
 import { SoundEffects } from '../utils/SoundEffects';
 import { 
-  Shield, Cpu, Award, RefreshCw, Layers, 
+  Cpu, Award, RefreshCw, Layers,
   Mail, Linkedin, Github, GraduationCap, Briefcase, 
   Send, User, Code, Heart
 } from 'lucide-react';
@@ -11,29 +11,8 @@ import {
 
 const Dashboard = ({ onSelectProject }) => {
   const [filter, setFilter] = useState('ALL');
-  const [logs, setLogs] = useState([]);
-  const [cpuUsage, setCpuUsage] = useState(38);
-  const [ramUsage, setRamUsage] = useState(58);
-
   const [emailForm, setEmailForm] = useState({ email: '', subject: '', message: '' });
   const [formSent, setFormSent] = useState(false);
-
-  useEffect(() => {
-    const initialLogs = [
-      { id: 1, time: '18:01:00', text: 'Colgate CS & Applied Math Core Node: ONLINE', type: 'normal' },
-      { id: 2, time: '18:01:04', text: 'Verification Hash: 0xCOLGATE_CS_AI', type: 'normal' },
-      { id: 3, time: '18:01:10', text: 'Stanford-affiliated Polygence AI Research indexed.', type: 'normal' },
-      { id: 4, time: '18:01:15', text: 'Unreal Engine 5 3D Rendering Pipeline: 60 FPS', type: 'normal' },
-    ];
-    setLogs(initialLogs);
-
-    const interval = setInterval(() => {
-      setCpuUsage(Math.floor(25 + Math.random() * 35));
-      setRamUsage(Math.floor(50 + Math.random() * 15));
-    }, 4500);
-
-    return () => clearInterval(interval);
-  }, []);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();

@@ -499,13 +499,13 @@ ${emailForm.message}`)}`;
                 linkedin.com/in/{resumeData.linkedinHandle}
               </a>
               <a 
-                href="https://github.com/aliabdullah12347" 
+                href={resumeData.github} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-text)', textDecoration: 'none', fontSize: '0.88rem' }}
               >
                 <Github size={16} color="var(--color-neon-cyan)" />
-                github.com/aliabdullah12347
+                github.com/{resumeData.githubHandle}
               </a>
             </div>
           </div>

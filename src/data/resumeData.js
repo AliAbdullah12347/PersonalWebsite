@@ -1,25 +1,51 @@
+const CLASS_OF = 2028;
+
+// Colgate's academic year rolls over in August. Deriving the class standing and
+// the recruiting cycle from the graduation year keeps this copy correct on its
+// own, instead of quietly going stale every September.
+const STANDINGS = ['first-year', 'first-year', 'sophomore', 'junior', 'senior'];
+
+function academicYearEnd(now = new Date()) {
+  return now.getMonth() >= 7 ? now.getFullYear() + 1 : now.getFullYear();
+}
+
+function classStanding(gradYear, now = new Date()) {
+  const index = 4 - (gradYear - academicYearEnd(now));
+  return STANDINGS[Math.min(Math.max(index, 1), 4)];
+}
+
+const standing = classStanding(CLASS_OF);
+// The summer you recruit for during the current academic year.
+const targetSummer = academicYearEnd();
+
 export const resumeData = {
   name: "Ali Abdullah",
-  title: "Intern @ Alterea, Inc. | CS & Applied Math @ Colgate | Alumni Memorial Scholar ’28",
+  title: "CS & Applied Math @ Colgate | Alumni Memorial Scholar ’28",
   location: "Hamilton, New York, United States",
   email: "aliabdullah123478@gmail.com",
   linkedin: "https://www.linkedin.com/in/aliabdullah12347",
   linkedinHandle: "aliabdullah12347",
+  github: "https://github.com/AliAbdullah12347",
+  githubHandle: "AliAbdullah12347",
   vercelUrl: "https://aliabdullah.vercel.app/",
-  classOf: "2028",
+  classOf: String(CLASS_OF),
+  standing,
+  targetSummer,
 
-  heroIntro: "Hi, I’m Ali Abdullah, a Colgate University CS & Applied Math student building innovative AI, ML, and full-stack projects that merge creativity with technology.",
+  heroIntro:
+    "Computer Science & Applied Math at Colgate, working where machine learning meets security and real-time graphics — adversarial tooling that keeps artwork out of training sets, agents that learn to play, and 3D environments running at 60fps inside a planetarium dome.",
 
-  aboutText: "I am a full-stack developer and AI/ML enthusiast with experience building interactive and responsive applications. I work with JavaScript, Python, React, Next.js, Tailwind CSS, Supabase, Prisma, Unreal Engine, and Git. I enjoy learning new technologies, tackling challenging problems, and collaborating on projects that combine creativity with technical precision.",
+  aboutText:
+    "I gravitate toward problems that sit between disciplines. Most of what I have built lands somewhere between machine learning, security and real-time rendering: an adversarial noise tool that makes images unusable as scraped training data, an ensemble architecture for reducing bias in judicial AI, and Unreal Engine environments now used across four Colgate courses. Day to day that means Python, JavaScript and TypeScript, React and Next.js, with C# and Unreal Blueprints on the graphics side.",
 
-  summaryText: "I am a CS & Applied Math sophomore at Colgate with a deep interest in Artificial Intelligence and Cybersecurity. My work ranges from publishing AI ethics research to building automated vulnerability scanners, working with Kali Linux, and production-level software. I am a relentless learner and a tireless worker, seeking a team where I can tackle hard technical problems and expand my security expertise. Seeking: Summer 2026 Software Engineering or AI/Cybersecurity internships.",
+  summaryText:
+    `A ${standing} at Colgate studying Computer Science & Applied Math, focused on artificial intelligence and cybersecurity. I have published AI ethics research through a Stanford-affiliated program, shipped production C# fixes as a software engineering intern, and built 3D visualization systems that four university courses now depend on. Seeking Summer ${targetSummer} software engineering or AI/security internships where the problems are genuinely hard.`,
 
   stats: [
-    { label: "Class Of", value: "2028" },
-    { label: "Scholar", value: "Alumni Memorial '28" },
+    { label: "Class Of", value: String(CLASS_OF) },
+    { label: "Scholar", value: "Alumni Memorial ’28" },
     { label: "Focus", value: "AI & Cyber" }
   ],
-
 
   experience: [
     {
@@ -132,9 +158,10 @@ export const resumeData = {
   ],
 
   skills: [
-    "JavaScript", "Java", "C", "Python", "React", "Next.js", 
-    "Tailwind CSS", "Supabase", "Prisma", "PostgreSQL", 
-    "Unreal Engine", "Blender", "Git/Github"
+    "Python", "JavaScript", "TypeScript", "Java", "C", "C#",
+    "React", "Next.js", "Tailwind CSS",
+    "PyTorch", "Supabase", "Prisma", "PostgreSQL",
+    "Unreal Engine", "Blender", "Git/GitHub"
   ],
 
   languages: [

@@ -5,7 +5,7 @@ import { SoundEffects } from '../utils/SoundEffects';
 import { 
   Cpu, Award, RefreshCw, Layers,
   Mail, Linkedin, Github, GraduationCap, Briefcase, 
-  Send, User, Code, Heart, Copy, Check
+  Send, User, Code, Heart, Copy, Check, CircleDot, Feather
 } from 'lucide-react';
 
 
@@ -53,6 +53,9 @@ ${emailForm.message}`)}`;
       elem.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
+  const tableTennis = resumeData.hobbies.find((h) => h.name === 'Table Tennis');
+  const urduPoetry = resumeData.hobbies.find((h) => h.name === 'Urdu Poetry');
 
   const filteredProjects = filter === 'ALL' 
     ? projectsData 
@@ -388,41 +391,37 @@ ${emailForm.message}`)}`;
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 'var(--space-md)' }}>
             
             {/* Table Tennis */}
-            <div style={{ background: 'rgba(6, 6, 10, 0.4)', border: '1px solid var(--color-border)', padding: 'var(--space-md)' }}>
-              <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '0.95rem', color: 'var(--color-neon-cyan)', marginBottom: '8px', textTransform: 'uppercase' }}>
-                🏓 Table Tennis
+            <div className="hobby-card">
+              <h3 className="hobby-title" style={{ color: 'var(--color-neon-cyan)' }}>
+                <CircleDot size={16} /> Table Tennis
               </h3>
               <p style={{ fontSize: '0.85rem', color: 'var(--color-text)', lineHeight: '1.6' }}>
-                {resumeData.hobbies.find(h => h.name === 'Table Tennis').description}
+                {tableTennis.description}
               </p>
             </div>
 
             {/* Urdu Poetry */}
-            <div style={{ background: 'rgba(6, 6, 10, 0.4)', border: '1px solid var(--color-border)', padding: 'var(--space-md)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div className="hobby-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
               <div>
-                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '0.95rem', color: 'var(--color-neon-magenta)', marginBottom: '8px', textTransform: 'uppercase' }}>
-                  ✍️ Urdu Poetry & Ghazals
+                <h3 className="hobby-title" style={{ color: 'var(--color-neon-magenta)' }}>
+                  <Feather size={16} /> Urdu Poetry &amp; Ghazals
                 </h3>
                 <p style={{ fontSize: '0.85rem', color: 'var(--color-text)', lineHeight: '1.6', marginBottom: '12px' }}>
-                  {resumeData.hobbies.find(h => h.name === 'Urdu Poetry').description}
+                  {urduPoetry.description}
                 </p>
               </div>
-              <div style={{ 
-                borderTop: '1px dashed var(--color-border)', 
-                paddingTop: '12px', 
-                textAlign: 'right', 
-                fontSize: '1.15rem', 
-                color: 'var(--color-neon-green)',
-                direction: 'rtl',
-                lineHeight: '1.8',
-                fontFamily: 'serif'
-              }}>
-                ہزاروں خواہشیں ایسی کہ ہر خواہش پہ دم نکلے<br />
-                بہت نکلے میرے ارمان لیکن پھر بھی کم نکلے
-              </div>
-              <div style={{ fontSize: '0.7rem', color: 'var(--color-text-muted)', marginTop: '4px', textAlign: 'right' }}>
-                — Mirza Ghalib
-              </div>
+
+              <figure style={{ borderTop: '1px dashed var(--color-border)', paddingTop: '12px' }}>
+                <blockquote className="urdu-couplet" lang="ur" dir="rtl">
+                  {urduPoetry.couplet.map((line, i) => (
+                    <span key={i}>{line}</span>
+                  ))}
+                </blockquote>
+                <figcaption className="urdu-caption">
+                  <span style={{ color: 'var(--color-text-muted)' }}>&mdash; {urduPoetry.coupletPoet}</span>
+                  <span className="urdu-translation">&ldquo;{urduPoetry.coupletTranslation}&rdquo;</span>
+                </figcaption>
+              </figure>
             </div>
 
           </div>

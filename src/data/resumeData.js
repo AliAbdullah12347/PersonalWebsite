@@ -154,7 +154,12 @@ export const resumeData = {
       name: "Urdu Poetry",
       focus: true,
       description: "Deeply passionate about classical Urdu Ghazals, studying complex rhythmic meters (baher) and symbolic metaphors of poets like Mirza Ghalib and Allama Iqbal. To me, a beautifully balanced couplet carries the same elegance as a perfectly engineered recursive function.",
-      couplet: "ہزاروں خواہشیں ایسی کہ ہر خواہش پہ دم نکلے\nبہت نکلے میرے ارمان لیکن پھر بھی کم نکلے"
+      couplet: [
+        "ہزاروں خواہشیں ایسی کہ ہر خواہش پہ دم نکلے",
+        "بہت نکلے میرے ارمان لیکن پھر بھی کم نکلے"
+      ],
+      coupletPoet: "Mirza Ghalib",
+      coupletTranslation: "A thousand desires, each one worth dying for — many were fulfilled, yet still too few."
     },
     { name: "Badminton" },
     { name: "Travelling" },

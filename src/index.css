@@ -741,6 +741,57 @@ input:checked + .switch-slider:before {
   background: rgba(0,0,0,0.2);
 }
 
+/* Hobbies */
+.hobby-card {
+  background: rgba(6, 6, 10, 0.4);
+  border: 1px solid var(--color-border);
+  padding: var(--space-md);
+  transition: border-color 0.2s ease;
+}
+
+.hobby-card:hover {
+  border-color: var(--color-neon-cyan);
+}
+
+.hobby-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+/* Nastaliq-leaning stack; the generic serif fallback keeps the shaping
+   readable where none of the named faces are installed. */
+.urdu-couplet {
+  font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', 'Urdu Typesetting', serif;
+  font-size: 1.15rem;
+  line-height: 2.1;
+  color: var(--color-neon-green);
+  text-align: right;
+}
+
+.urdu-couplet span {
+  display: block;
+}
+
+.urdu-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 8px;
+  text-align: right;
+  font-size: 0.7rem;
+}
+
+.urdu-translation {
+  font-style: italic;
+  color: var(--color-text-muted);
+  opacity: 0.85;
+}
+
 /* TERMINAL */
 .terminal-container {
   flex-grow: 1;

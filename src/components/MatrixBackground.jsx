@@ -1,5 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 
+// Characters: binary, hex, and cyber symbols
+const CHARS = '01010101ABCDEFGHIJKLMNOPQRSTUVWXYZ$%#@&*-+=[]{}<>_/'.split('');
+const FONT_SIZE = 14;
+const FRAME_MS = 1000 / 24; // Throttled: rain reads the same but costs a third of the frames
+
 const MatrixBackground = () => {
   const canvasRef = useRef(null);
 
@@ -7,46 +12,60 @@ const MatrixBackground = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    // Users who ask the OS to reduce motion get a still canvas
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) return;
+
     const ctx = canvas.getContext('2d');
     let animationFrameId;
+    let resizeTimer;
+    let lastFrame = 0;
+    let drops = [];
 
-    // Set canvas dimensions
+    // Size the canvas and rebuild the column tracker to match the new width
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+
+      const columns = Math.floor(canvas.width / FONT_SIZE) + 1;
+      const next = Array(columns);
+      for (let i = 0; i < columns; i++) {
+        // Preserve in-flight drops so a resize does not restart the rain
+        next[i] = drops[i] ?? Math.floor((Math.random() * canvas.height) / FONT_SIZE);
+      }
+      drops = next;
+
+      ctx.font = `${FONT_SIZE}px monospace`;
     };
     resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
 
-    // Characters: binary, hex, and cyber symbols
-    const chars = '01010101ABCDEFGHIJKLMNOPQRSTUVWXYZ$%#@&*-+=[]{}<>_/';
-    const charArray = chars.split('');
-    
-    const fontSize = 14;
-    const columns = Math.floor(canvas.width / fontSize) + 1;
-    
-    // Drops tracking y position
-    const drops = Array(columns).fill(1);
+    const handleResize = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(resizeCanvas, 150);
+    };
+    window.addEventListener('resize', handleResize);
 
-    const draw = () => {
-      // Semi-transparent black background to create trail effect
+    const draw = (timestamp) => {
+      animationFrameId = requestAnimationFrame(draw);
+
+      if (timestamp - lastFrame < FRAME_MS) return;
+      lastFrame = timestamp;
+
+      // Semi-transparent background to create the trail effect
       ctx.fillStyle = 'rgba(6, 6, 10, 0.12)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Low contrast neon cyan / green for trailing lines
-      ctx.fillStyle = 'rgba(0, 240, 255, 0.2)'; // Primary drop trail is Cyan
-      ctx.font = `${fontSize}px monospace`;
+      ctx.font = `${FONT_SIZE}px monospace`;
 
       for (let i = 0; i < drops.length; i++) {
-        const text = charArray[Math.floor(Math.random() * charArray.length)];
-        const x = i * fontSize;
-        const y = drops[i] * fontSize;
+        const text = CHARS[(Math.random() * CHARS.length) | 0];
+        const x = i * FONT_SIZE;
+        const y = drops[i] * FONT_SIZE;
 
-        // Draw character
-        // Occasional bright green highlights to mimic code flow
-        if (Math.random() > 0.97) {
+        // Occasional bright highlights to mimic code flow
+        const roll = Math.random();
+        if (roll > 0.97) {
           ctx.fillStyle = '#00ff66'; // Glowing Green
-        } else if (Math.random() > 0.95) {
+        } else if (roll > 0.95) {
           ctx.fillStyle = '#ff007f'; // Glowing Magenta
         } else {
           ctx.fillStyle = 'rgba(0, 240, 255, 0.25)'; // Glowing Cyan
@@ -61,16 +80,25 @@ const MatrixBackground = () => {
 
         drops[i]++;
       }
-      
-      animationFrameId = requestAnimationFrame(draw);
     };
 
-    // Start rendering loop
-    draw();
+    // Stop burning frames while the tab is in the background
+    const handleVisibility = () => {
+      if (document.hidden) {
+        cancelAnimationFrame(animationFrameId);
+      } else {
+        lastFrame = 0;
+        animationFrameId = requestAnimationFrame(draw);
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
 
-    // Clean up event listener and animation frame
+    animationFrameId = requestAnimationFrame(draw);
+
     return () => {
-      window.removeEventListener('resize', resizeCanvas);
+      window.removeEventListener('resize', handleResize);
+      document.removeEventListener('visibilitychange', handleVisibility);
+      clearTimeout(resizeTimer);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
@@ -78,6 +106,7 @@ const MatrixBackground = () => {
   return (
     <canvas
       ref={canvasRef}
+      aria-hidden="true"
       style={{
         position: 'fixed',
         top: 0,

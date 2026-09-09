@@ -207,10 +207,19 @@ const Dashboard = ({ onSelectProject }) => {
 
           <div className="project-grid-bento">
             {filteredProjects.map((p) => (
-              <div 
+              <div
                 className="project-card"
                 key={p.id}
+                role="button"
+                tabIndex={0}
+                aria-label={`Open project dossier: ${p.title}`}
                 onClick={() => onSelectProject(p)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    onSelectProject(p);
+                  }
+                }}
               >
                 <div className="project-img-wrapper">
                   <img

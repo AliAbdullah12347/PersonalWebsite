@@ -164,6 +164,47 @@ body {
   100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
+/* Keyboard focus — the HUD had no visible focus ring anywhere, so tabbing
+   through the page was invisible. :focus-visible keeps mouse clicks clean. */
+:focus-visible {
+  outline: 2px solid var(--color-neon-cyan);
+  outline-offset: 2px;
+}
+
+.hud-button:focus-visible,
+.filter-tag:focus-visible,
+.project-card:focus-visible {
+  outline: 2px solid var(--color-neon-cyan);
+  outline-offset: 2px;
+  box-shadow: var(--glow-cyan);
+}
+
+.cyber-switch input:focus-visible + .switch-slider {
+  outline: 2px solid var(--color-neon-cyan);
+  outline-offset: 2px;
+}
+
+/* Skip link — first tab stop, jumps past the nav strip */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 1001;
+  background: var(--bg-panel-solid);
+  border: 1px solid var(--color-neon-cyan);
+  color: var(--color-neon-cyan);
+  padding: 10px 16px;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  left: var(--space-md);
+  top: var(--space-md);
+}
+
 /* Slow rotation for the HUD processor glyphs */
 .spinning {
   animation: spin 8s linear infinite;

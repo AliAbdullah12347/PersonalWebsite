@@ -66,6 +66,7 @@ function App() {
   return (
     <div className="app-root">
       <Analytics />
+      <a className="skip-link" href="#main-content">Skip to content</a>
       {/* Standalone CRT screen scanline overlay - DOES NOT WRAP DOM */}
       {crtActive && <div className="crt-overlay" />}
 
@@ -138,7 +139,7 @@ function App() {
         </header>
 
         {/* MAINFRAME */}
-        <main className="hud-mainframe">
+        <main className="hud-mainframe" id="main-content">
           {activeTab === 'dashboard' ? (
             <Dashboard onSelectProject={(project) => {
               SoundEffects.playToggle();

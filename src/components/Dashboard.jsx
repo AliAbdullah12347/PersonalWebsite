@@ -5,7 +5,7 @@ import { SoundEffects } from '../utils/SoundEffects';
 import { 
   Cpu, Award, RefreshCw, Layers,
   Mail, Linkedin, Github, GraduationCap, Briefcase, 
-  Send, User, Code, Heart
+  Send, User, Code, Heart, Copy, Check
 } from 'lucide-react';
 
 
@@ -13,21 +13,37 @@ const Dashboard = ({ onSelectProject }) => {
   const [filter, setFilter] = useState('ALL');
   const [emailForm, setEmailForm] = useState({ email: '', subject: '', message: '' });
   const [formSent, setFormSent] = useState(false);
+  const [emailCopied, setEmailCopied] = useState(false);
 
+  // The form has no backend: it hands the draft to the visitor's own mail
+  // client. Navigating the current tab is what mailto: expects — window.open
+  // gets eaten by popup blockers and can strand an empty tab. The draft is
+  // deliberately left in the fields in case no mail handler is registered.
   const handleFormSubmit = (e) => {
     e.preventDefault();
     if (!emailForm.email || !emailForm.message) return;
-    
+
     SoundEffects.playSuccess();
     setFormSent(true);
-    
-    const mailtoUrl = `mailto:${resumeData.email}?subject=${encodeURIComponent(emailForm.subject || 'Portfolio Contact')}&body=${encodeURIComponent(`From: ${emailForm.email}\n\n${emailForm.message}`)}`;
-    window.open(mailtoUrl, '_blank');
 
-    setTimeout(() => {
-      setFormSent(false);
-      setEmailForm({ email: '', subject: '', message: '' });
-    }, 5000);
+    const mailtoUrl = `mailto:${resumeData.email}?subject=${encodeURIComponent(emailForm.subject || 'Portfolio Contact')}&body=${encodeURIComponent(`From: ${emailForm.email}
+
+${emailForm.message}`)}`;
+    window.location.href = mailtoUrl;
+
+    setTimeout(() => setFormSent(false), 5000);
+  };
+
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(resumeData.email);
+      SoundEffects.playSuccess();
+      setEmailCopied(true);
+      setTimeout(() => setEmailCopied(false), 2500);
+    } catch {
+      // Clipboard blocked (insecure context or denied) — the address is
+      // already on screen as a mailto link, so there is nothing to recover.
+    }
   };
 
   const scrollToSection = (id) => {
@@ -456,13 +472,24 @@ const Dashboard = ({ onSelectProject }) => {
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-sm)', marginTop: 'var(--space-sm)' }}>
-              <a 
-                href={`mailto:${resumeData.email}`} 
-                style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-text)', textDecoration: 'none', fontSize: '0.88rem' }}
-              >
-                <Mail size={16} color="var(--color-neon-cyan)" />
-                {resumeData.email}
-              </a>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                <a
+                  href={`mailto:${resumeData.email}`}
+                  style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-text)', textDecoration: 'none', fontSize: '0.88rem' }}
+                >
+                  <Mail size={16} color="var(--color-neon-cyan)" />
+                  {resumeData.email}
+                </a>
+                <button
+                  type="button"
+                  className="copy-btn"
+                  onClick={handleCopyEmail}
+                  aria-label="Copy email address to clipboard"
+                >
+                  {emailCopied ? <Check size={12} /> : <Copy size={12} />}
+                  {emailCopied ? 'COPIED' : 'COPY'}
+                </button>
+              </div>
               <a 
                 href={resumeData.linkedin} 
                 target="_blank" 
@@ -527,7 +554,7 @@ const Dashboard = ({ onSelectProject }) => {
             </div>
 
             <button type="submit" className="hud-button active" style={{ justifyContent: 'center', padding: '12px' }}>
-              <Send size={16} /> {formSent ? 'MESSAGE DISPATCHED!' : 'Send Message'}
+              <Send size={16} /> {formSent ? 'OPENING MAIL CLIENT…' : 'Compose Message'}
             </button>
           </form>
         </div>

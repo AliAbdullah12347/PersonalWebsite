@@ -47,7 +47,7 @@ const ProjectModal = ({ project, onClose }) => {
             </div>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <span className="threat-level-badge">VERIFIED REPO</span>
+            <span className="threat-level-badge">{project.github ? 'VERIFIED REPO' : 'PRIVATE BUILD'}</span>
             <button className="modal-close-btn" onClick={onClose} aria-label="Close modal">
               <X size={16} />
             </button>
@@ -64,14 +64,20 @@ const ProjectModal = ({ project, onClose }) => {
             </div>
             <div className="sys-stat-item">
               <span className="sys-stat-label">GitHub Repository</span>
-              <a 
-                href={project.github} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                style={{ color: 'var(--color-neon-green)', fontSize: '0.75rem', fontFamily: 'var(--font-body)', textDecoration: 'none' }}
-              >
-                {project.github.replace('https://github.com/', '')}
-              </a>
+              {project.github ? (
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: 'var(--color-neon-green)', fontSize: '0.75rem', fontFamily: 'var(--font-body)', textDecoration: 'none' }}
+                >
+                  {project.github.replace('https://github.com/', '')}
+                </a>
+              ) : (
+                <span style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', fontFamily: 'var(--font-body)' }}>
+                  {project.repoNote || 'Source not public'}
+                </span>
+              )}
             </div>
           </div>
 
@@ -143,15 +149,17 @@ const ProjectModal = ({ project, onClose }) => {
 
         {/* Modal Footer */}
         <div className="modal-footer-sec">
-          <button 
-            className="hud-button" 
-            onClick={() => {
-              SoundEffects.playToggle();
-              window.open(project.github, '_blank');
-            }}
-          >
-            &lt;/&gt; SOURCE CODE
-          </button>
+          {project.github && (
+            <button
+              className="hud-button"
+              onClick={() => {
+                SoundEffects.playToggle();
+                window.open(project.github, '_blank', 'noopener,noreferrer');
+              }}
+            >
+              &lt;/&gt; SOURCE CODE
+            </button>
+          )}
 
           {/* Only render Live Node button if liveUrl is valid */}
           {project.liveUrl && (
@@ -159,7 +167,7 @@ const ProjectModal = ({ project, onClose }) => {
               className="hud-button active" 
               onClick={() => {
                 SoundEffects.playSuccess();
-                window.open(project.liveUrl, '_blank');
+                window.open(project.liveUrl, '_blank', 'noopener,noreferrer');
               }}
             >
               <Eye size={14} /> LIVE NODE

@@ -132,7 +132,8 @@ const Terminal = () => {
           { text: `CATEGORY: ${proj.category}`, type: 'output' },
           { text: `TECH STACK: ${proj.tech.join(' // ')}`, type: 'info' },
           { text: `DETAILS: ${proj.longDesc}`, type: 'output' },
-          { text: `REPOSITORY: ${proj.github}`, type: 'output' },
+          { text: `REPOSITORY: ${proj.github || proj.repoNote || 'Source not public'}`, type: 'output' },
+          ...(proj.liveUrl ? [{ text: `LIVE NODE: ${proj.liveUrl}`, type: 'info' }] : []),
         ]);
         break;
 

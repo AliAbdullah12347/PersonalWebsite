@@ -83,7 +83,8 @@ export const projectsData = [
     desc: "Created a karaoke lyric display system and audio visualizer compatible with dome projection using Unreal Engine 5.3 and Blueprints.",
     longDesc: "Real-time 3D immersive visualization system built inside Unreal Engine 5.3 for planetarium and 360° dome projections. Features real-time FFT audio spectrum analysis driving particle Niagara effects, custom Blueprint shader networks, and synchronized fish-eye dome camera rendering.",
     tech: ["Unreal Engine 5.3", "Blueprints", "Blender", "HLSL"],
-    github: "https://github.com/AliAbdullah12347/Vulnerability-Scanner",
+    github: null,
+    repoNote: "Internal Colgate University build — source not public",
     liveUrl: null,
     threatModel: {
       spoofing: 1,

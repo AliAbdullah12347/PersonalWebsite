@@ -772,6 +772,7 @@ input:checked + .switch-slider:before {
   display: flex;
   flex-direction: column;
   position: relative;
+  animation: modal-boot 220ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
 .modal-close-btn {
@@ -784,6 +785,23 @@ input:checked + .switch-slider:before {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.modal-close-btn:hover {
+  border-color: var(--color-neon-magenta);
+  color: var(--color-neon-magenta);
+  box-shadow: var(--glow-magenta);
+}
+
+.modal-tech-tag {
+  font-size: 0.72rem;
+  color: var(--color-neon-cyan);
+  border: 1px solid var(--color-border);
+  background: rgba(0, 240, 255, 0.05);
+  padding: 4px 10px;
+  font-family: var(--font-body);
 }
 
 .modal-header-sec {

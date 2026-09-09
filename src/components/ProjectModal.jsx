@@ -9,6 +9,24 @@ const ProjectModal = ({ project, onClose }) => {
     }
   }, [project]);
 
+  // Escape closes the dossier, and the page behind it stays put while it is open
+  useEffect(() => {
+    if (!project) return;
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', handleKeyDown);
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [project, onClose]);
+
   if (!project) return null;
 
   const threatModel = project.threatModel || {
@@ -28,10 +46,12 @@ const ProjectModal = ({ project, onClose }) => {
 
   return (
     <div className="modal-overlay open" onClick={onClose}>
-      <div 
-        className="threat-modal" 
+      <div
+        className="threat-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-label={`Project dossier: ${project.title}`}
         onClick={(e) => e.stopPropagation()}
-        style={{ animation: 'glitch-skew 0.3s ease-out' }}
       >
         {/* Modal Header */}
         <div className="modal-header-sec">
@@ -89,6 +109,18 @@ const ProjectModal = ({ project, onClose }) => {
             <p style={{ fontSize: '0.85rem', color: 'var(--color-text)', lineHeight: '1.6' }}>
               {project.longDesc || project.desc}
             </p>
+          </div>
+
+          {/* Tech Stack */}
+          <div>
+            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '0.9rem', color: 'var(--color-neon-cyan)', marginBottom: '8px', textTransform: 'uppercase' }}>
+              // Deployed Stack
+            </h3>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+              {project.tech.map((t) => (
+                <span key={t} className="modal-tech-tag">{t}</span>
+              ))}
+            </div>
           </div>
 
           {/* Technical Specs & STRIDE Threat Analysis */}

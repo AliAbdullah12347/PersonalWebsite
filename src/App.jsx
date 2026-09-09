@@ -4,6 +4,7 @@ import Dashboard from './components/Dashboard';
 import Terminal from './components/Terminal';
 import ProjectModal from './components/ProjectModal';
 import { SoundEffects } from './utils/SoundEffects';
+import { resumeData } from './data/resumeData';
 import { Terminal as TerminalIcon, Layout, Volume2, VolumeX, Cpu } from 'lucide-react';
 import { Analytics } from '@vercel/analytics/react';
 
@@ -151,23 +152,10 @@ function App() {
         </main>
 
         {/* FOOTER */}
-        <footer 
-          style={{ 
-            marginTop: 'auto', 
-            paddingTop: '24px', 
-            textAlign: 'center', 
-            fontSize: '0.7rem', 
-            color: 'var(--color-text-muted)',
-            fontFamily: 'var(--font-body)',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            borderTop: '1px solid var(--color-border)'
-          }}
-        >
-          <div>SYS STATUS: SECURED // VERCEL READY</div>
-          <div>© {new Date().getFullYear()} ALI ABDULLAH // ALL RIGHTS RESERVED</div>
-          <div>COLGATE UNIVERSITY CS & APPLIED MATH</div>
+        <footer className="hud-footer">
+          <div>SYS STATUS: ONLINE // OPEN TO SUMMER {resumeData.targetSummer} ROLES</div>
+          <div>© {new Date().getFullYear()} ALI ABDULLAH</div>
+          <div>COLGATE UNIVERSITY CS &amp; APPLIED MATH</div>
         </footer>
       </div>
 

@@ -67,8 +67,8 @@ ${emailForm.message}`)}`;
       {/* 1. HERO SECTION */}
       <section id="hero" className="cyber-panel cut-corners hud-brackets" style={{ padding: 'var(--space-xl) var(--space-lg)' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-neon-cyan)', fontSize: '0.85rem', fontFamily: 'var(--font-heading)', letterSpacing: '1px' }}>
-            <Cpu size={16} className="spinning" />
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', color: 'var(--color-neon-cyan)', fontSize: '0.85rem', fontFamily: 'var(--font-heading)', letterSpacing: '1px' }}>
+            <Cpu size={16} className="spinning" style={{ flexShrink: 0, marginTop: '2px' }} />
             <span>ALUMNI MEMORIAL SCHOLAR ’28 // COLGATE CS & APPLIED MATH</span>
           </div>
 

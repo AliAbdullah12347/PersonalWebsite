@@ -1110,6 +1110,22 @@ input:checked + .switch-slider:before {
   animation: cyber-pulse 2s ease-in-out infinite;
 }
 
+/* Footer */
+.hud-footer {
+  margin-top: auto;
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+}
+
 /* Media Queries for Mobile */
 
 /* Below this the logo and the audio/CRT controls consume the whole bar, so the

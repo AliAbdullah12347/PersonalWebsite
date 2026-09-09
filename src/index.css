@@ -306,6 +306,8 @@ body {
   display: flex;
   align-items: center;
   gap: 4px;
+  flex: 1 1 auto;
+  min-width: 0;
   flex-wrap: nowrap;
   overflow-x: auto;
   white-space: nowrap;
@@ -1109,6 +1111,25 @@ input:checked + .switch-slider:before {
 }
 
 /* Media Queries for Mobile */
+
+/* Below this the logo and the audio/CRT controls consume the whole bar, so the
+   nav moves to its own full-width row and scrolls horizontally there. */
+@media (max-width: 900px) {
+  .hud-header {
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+  .hud-nav-center {
+    order: 3;
+    flex: 1 0 100%;
+    width: 100%;
+    padding-bottom: 2px;
+    /* Fades the right edge so it reads as scrollable rather than clipped */
+    mask-image: linear-gradient(to right, #000 88%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, #000 88%, transparent 100%);
+  }
+}
+
 @media (max-width: 768px) {
   .hud-header {
     padding: 6px 10px;
@@ -1122,6 +1143,13 @@ input:checked + .switch-slider:before {
   }
   .arch-connector {
     transform: rotate(90deg);
+  }
+  .modal-footer-sec {
+    justify-content: stretch;
+  }
+  .modal-footer-sec .hud-button {
+    flex: 1;
+    justify-content: center;
   }
 }
 

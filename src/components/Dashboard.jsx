@@ -219,8 +219,8 @@ const Dashboard = ({ onSelectProject }) => {
                     className="project-img"
                     loading="lazy"
                     decoding="async"
-                    width="1376"
-                    height="774"
+                    width="900"
+                    height="502"
                     onError={(e) => {
                       // Leave the wrapper's fallback glyph visible instead of a black box
                       e.target.style.visibility = 'hidden';

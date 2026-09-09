@@ -269,6 +269,12 @@ body {
   }
 }
 
+/* Hero lead: capped by character count rather than a pixel width, which ran
+   to ~84 characters per line at desktop — well past a comfortable measure. */
+.hero-lead {
+  max-width: 68ch;
+}
+
 /* Layout Utilities */
 .hud-container {
   max-width: 1400px;
@@ -363,6 +369,7 @@ body {
   background: transparent;
   border: 1px solid var(--color-border);
   color: var(--color-text);
+  text-decoration: none;
   padding: 6px 12px;
   font-family: var(--font-body);
   font-size: var(--text-xs);
@@ -389,6 +396,13 @@ body {
   color: var(--color-neon-green);
   border-color: var(--color-neon-green);
   text-shadow: 0 0 5px rgba(0, 255, 102, 0.5);
+}
+
+/* Hero calls to action carry more weight than a nav item */
+.hud-button.lg {
+  padding: 12px 22px;
+  font-size: var(--text-sm);
+  letter-spacing: 1px;
 }
 
 .hud-button.accent {

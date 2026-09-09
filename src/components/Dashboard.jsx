@@ -135,14 +135,14 @@ ${emailForm.message}`)}`;
             Hello, I'm <span style={{ color: 'var(--color-neon-cyan)', textShadow: 'var(--glow-cyan)' }}>Ali Abdullah</span>
           </h1>
 
-          <p style={{ fontSize: 'var(--text-lead)', color: 'var(--color-text)', maxWidth: '900px', lineHeight: '1.6' }}>
+          <p className="hero-lead" style={{ fontSize: 'var(--text-lead)', color: 'var(--color-text)', lineHeight: '1.7' }}>
             {resumeData.heroIntro}
           </p>
 
           {/* Quick CTA Actions */}
           <div style={{ display: 'flex', gap: 'var(--space-md)', marginTop: 'var(--space-sm)', flexWrap: 'wrap' }}>
             <button 
-              className="hud-button active"
+              className="hud-button active lg"
               onClick={() => scrollToSection('contact')}
             >
               <Mail size={16} /> Get in Touch!
@@ -151,7 +151,7 @@ ${emailForm.message}`)}`;
               href={resumeData.linkedin} 
               target="_blank" 
               rel="noopener noreferrer"
-              className="hud-button accent"
+              className="hud-button accent lg"
               onClick={() => SoundEffects.playToggle()}
             >
               <Linkedin size={16} /> Check out my Linkedin!

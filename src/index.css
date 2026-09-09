@@ -582,7 +582,27 @@ input:checked + .switch-slider:before {
   overflow: hidden;
 }
 
+/* Sits behind the artwork, so a failed image reads as a HUD placeholder
+   rather than an unexplained black rectangle */
+.project-img-wrapper::after {
+  content: "// NO SIGNAL";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  color: var(--color-text-muted);
+  opacity: 0.4;
+  z-index: 0;
+  pointer-events: none;
+}
+
 .project-img {
+  position: relative;
+  z-index: 1;
   width: 100%;
   height: 100%;
   object-fit: cover;

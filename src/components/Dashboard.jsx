@@ -213,12 +213,17 @@ const Dashboard = ({ onSelectProject }) => {
                 onClick={() => onSelectProject(p)}
               >
                 <div className="project-img-wrapper">
-                  <img 
-                    src={p.image} 
-                    alt={p.title} 
-                    className="project-img" 
+                  <img
+                    src={p.image}
+                    alt={`${p.title} — project artwork`}
+                    className="project-img"
+                    loading="lazy"
+                    decoding="async"
+                    width="1376"
+                    height="774"
                     onError={(e) => {
-                      e.target.style.display = 'none';
+                      // Leave the wrapper's fallback glyph visible instead of a black box
+                      e.target.style.visibility = 'hidden';
                     }}
                   />
                   <div className="project-card-overlay" />

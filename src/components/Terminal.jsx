@@ -3,12 +3,62 @@ import { projectsData } from '../data/projectsData';
 import { resumeData } from '../data/resumeData';
 import { SoundEffects } from '../utils/SoundEffects';
 
+// Single source of truth for the shell: drives `help`, tab-completion and the
+// "did you mean" hint, so adding a command here wires up all three.
+const COMMAND_HELP = [
+  ['help', 'List these commands.'],
+  ['about', 'Display student profile and research focus.'],
+  ['whoami', 'Print the current identity in one line.'],
+  ['experience', 'List professional and research experience.'],
+  ['education', 'List institutions and degrees.'],
+  ['honors', 'List honors, awards and certifications.'],
+  ['skills', 'List programming languages, tools and platforms.'],
+  ['hobbies', 'List interests outside the terminal.'],
+  ['projects', 'List all projects.'],
+  ['view <id>', 'View detailed dossier for a project (e.g. "view 1").'],
+  ['open <id>', 'Open a project’s live build or repository in a new tab.'],
+  ['contact', 'Print email, LinkedIn and GitHub.'],
+  ['scan', 'Run security scan simulation on local network.'],
+  ['decrypt', 'Decrypt contact info & credentials.'],
+  ['history', 'Show this session’s command history.'],
+  ['clear', 'Clear screen buffer.'],
+];
+
+const COMMANDS = COMMAND_HELP.map(([sig]) => sig.split(' ')[0]);
+const ID_COMMANDS = ['view', 'open'];
+const RULE = '==================================================';
+
+// Levenshtein distance, so a typo suggests the command it actually resembles
+// rather than the first one sharing a leading letter.
+const editDistance = (a, b) => {
+  const rows = Array.from({ length: b.length + 1 }, (_, i) => [i, ...Array(a.length).fill(0)]);
+  for (let j = 1; j <= a.length; j++) rows[0][j] = j;
+  for (let i = 1; i <= b.length; i++) {
+    for (let j = 1; j <= a.length; j++) {
+      rows[i][j] = Math.min(
+        rows[i - 1][j] + 1,
+        rows[i][j - 1] + 1,
+        rows[i - 1][j - 1] + (a[j - 1] === b[i - 1] ? 0 : 1)
+      );
+    }
+  }
+  return rows[b.length][a.length];
+};
+
+const suggestCommand = (input) => {
+  const ranked = COMMANDS
+    .map((c) => ({ c, d: editDistance(input, c) }))
+    .sort((x, y) => x.d - y.d);
+  // Only offer a correction when it is genuinely close to what was typed
+  return ranked[0] && ranked[0].d <= Math.max(2, Math.floor(input.length / 2)) ? ranked[0].c : null;
+};
+
 const Terminal = () => {
   const [history, setHistory] = useState([
     { text: 'SEC-OPS CORE COMMAND SHELL // VER 4.9.0', type: 'accent' },
     { text: `COLGATE UNIVERSITY DECKER SESSION: ${resumeData.name.toUpperCase()}`, type: 'info' },
     { text: 'STATUS: ALUMNI MEMORIAL SCHOLAR ’28', type: 'info' },
-    { text: 'Type "help" to view list of available shell commands.', type: 'output' },
+    { text: 'Type "help" for commands. TAB completes, ↑/↓ recalls, CTRL+L clears.', type: 'output' },
   ]);
   const [inputVal, setInputVal] = useState('');
   const [cmdHistory, setCmdHistory] = useState([]);
@@ -31,8 +81,13 @@ const Terminal = () => {
     focusInput();
   }, []);
 
+  const print = (lines) => setHistory((prev) => [...prev, ...lines]);
+
   const handleKeyDown = (e) => {
-    SoundEffects.playKeystroke();
+    // Only click for keys that actually produce output; modifiers stay silent
+    if (e.key.length === 1 || e.key === 'Enter' || e.key === 'Backspace') {
+      SoundEffects.playKeystroke();
+    }
 
     if (e.key === 'Enter') {
       const command = inputVal.trim();
@@ -62,72 +117,176 @@ const Terminal = () => {
         setHistoryIndex(cmdHistory.length);
         setInputVal('');
       }
+    } else if (e.key === 'Tab') {
+      e.preventDefault();
+      handleCompletion();
+    } else if (e.key === 'l' && e.ctrlKey) {
+      e.preventDefault();
+      setHistory([]);
     }
+  };
+
+  // Completes the command word. Once a full command is typed, the two commands
+  // that take an argument list the ids that are actually valid.
+  const handleCompletion = () => {
+    const value = inputVal.trimStart();
+    const parts = value.split(' ');
+    const word = parts[0].toLowerCase();
+
+    if (parts.length === 1) {
+      const matches = COMMANDS.filter((c) => c.startsWith(word));
+      if (matches.length === 1) {
+        setInputVal(matches[0] + (ID_COMMANDS.includes(matches[0]) ? ' ' : ''));
+        SoundEffects.playToggle();
+      } else if (matches.length > 1) {
+        print([
+          { text: `decker@colgate-node:~$ ${value}`, type: 'prompt' },
+          { text: matches.join('   '), type: 'info' },
+        ]);
+      }
+      return;
+    }
+
+    if (ID_COMMANDS.includes(word)) {
+      print([{ text: `Valid ids: ${projectsData.map((p) => p.id).join(', ')}`, type: 'info' }]);
+    }
+  };
+
+  // Shared id parsing for `view` and `open`. Prints its own error and returns
+  // null so callers can simply bail.
+  const resolveProject = (rawId) => {
+    const id = parseInt(rawId, 10);
+    if (!rawId || Number.isNaN(id)) {
+      print([{ text: 'ERROR: Specify a valid ID. Example: "view 1"', type: 'error' }]);
+      return null;
+    }
+    const proj = projectsData.find((p) => p.id === id);
+    if (!proj) {
+      print([
+        {
+          text: `ERROR: Project ID ${id} not found. Valid ids: ${projectsData.map((p) => p.id).join(', ')}`,
+          type: 'error',
+        },
+      ]);
+      return null;
+    }
+    return proj;
   };
 
   const executeCommand = (cmdText) => {
     if (isScanning || isDecrypting) {
-      setHistory((prev) => [...prev, { text: 'ERROR: Shell process locked.', type: 'error' }]);
+      print([{ text: 'ERROR: Shell process locked.', type: 'error' }]);
       return;
     }
 
-    const args = cmdText.split(' ');
+    const args = cmdText.split(' ').filter(Boolean);
     const command = args[0].toLowerCase();
 
     switch (command) {
-      case 'help':
-        setHistory((prev) => [
-          ...prev,
-          { text: '==================================================', type: 'output' },
+      case 'help': {
+        print([
+          { text: RULE, type: 'output' },
           { text: 'AVAILABLE COMMANDS:', type: 'accent' },
-          { text: '  about        Display student profile and research focus.', type: 'output' },
-          { text: '  projects     List all projects.', type: 'output' },
-          { text: '  view <id>    View detailed dossier for a project (e.g. "view 1").', type: 'output' },
-          { text: '  skills       List programming languages, tools, and platforms.', type: 'output' },
-          { text: '  scan         Run security scan simulation on local network.', type: 'output' },
-          { text: '  decrypt      Decrypt contact info & credentials.', type: 'output' },
-          { text: '  clear        Clear screen buffer.', type: 'output' },
-          { text: '==================================================', type: 'output' },
+          ...COMMAND_HELP.map(([sig, desc]) => ({
+            text: `  ${sig.padEnd(12)} ${desc}`,
+            type: 'output',
+          })),
+          { text: RULE, type: 'output' },
+          { text: 'TAB completes • ↑/↓ recalls history • CTRL+L clears', type: 'info' },
         ]);
         break;
+      }
 
-      case 'about':
-        setHistory((prev) => [
-          ...prev,
+      case 'about': {
+        print([
           { text: `--- DOSSIER: ${resumeData.name.toUpperCase()} ---`, type: 'accent' },
-          { text: `EDUCATION: Colgate University (BA Computer Science & Applied Math)`, type: 'output' },
-          { text: `ACADEMICS: Alumni Memorial Scholar '28`, type: 'info' },
-          { text: `EXPERIENCE: Immersive Visualization Dev @ Colgate // TA Python // Alterea Inc Intern // Polygence AI Ethics Researcher`, type: 'output' },
-          { text: `HONORS: IMO Bronze, AMO Gold, Cambridge High Achievement Award`, type: 'output' },
+          { text: 'EDUCATION: Colgate University (BA Computer Science & Applied Math)', type: 'output' },
+          { text: 'ACADEMICS: Alumni Memorial Scholar ’28', type: 'info' },
+          { text: 'EXPERIENCE: Immersive Visualization Dev @ Colgate // TA Python // Alterea Inc Intern // Polygence AI Ethics Researcher', type: 'output' },
+          { text: 'HONORS: SIMO Bronze, AMO Gold, Cambridge High Achievement Award', type: 'output' },
           { text: `SUMMARY: ${resumeData.summaryText}`, type: 'output' },
         ]);
         break;
+      }
 
-      case 'projects':
-        setHistory((prev) => [
-          ...prev,
+      case 'whoami': {
+        print([
+          { text: `${resumeData.name} — ${resumeData.title}`, type: 'accent' },
+          { text: resumeData.location, type: 'output' },
+        ]);
+        break;
+      }
+
+      case 'experience': {
+        const lines = [{ text: '--- PROFESSIONAL EXPERIENCE ---', type: 'accent' }];
+        resumeData.experience.forEach((org) => {
+          lines.push({ text: `[${org.company}]`, type: 'info' });
+          org.roles.forEach((role) => {
+            lines.push({ text: `  ${role.title}  (${role.period})`, type: 'output' });
+            role.bullets.forEach((b) => lines.push({ text: `    - ${b}`, type: 'output' }));
+          });
+        });
+        print(lines);
+        break;
+      }
+
+      case 'education': {
+        print([
+          { text: '--- EDUCATION ---', type: 'accent' },
+          ...resumeData.education.map((e) => ({
+            text: `${e.institution}${e.degree ? ` — ${e.degree}` : ''} (${e.period})${e.details ? ` [${e.details}]` : ''}`,
+            type: 'output',
+          })),
+        ]);
+        break;
+      }
+
+      case 'honors': {
+        print([
+          { text: '--- HONORS & AWARDS ---', type: 'accent' },
+          ...resumeData.honors.map((h) => ({ text: `  * ${h}`, type: 'output' })),
+          { text: '--- CERTIFICATIONS ---', type: 'accent' },
+          ...resumeData.certifications.map((c) => ({ text: `  * ${c}`, type: 'output' })),
+        ]);
+        break;
+      }
+
+      case 'skills': {
+        print([
+          { text: '--- TECHNICAL SKILLS MATRIX ---', type: 'accent' },
+          { text: `SKILLS: ${resumeData.skills.join(', ')}`, type: 'output' },
+          { text: `LANGUAGES: ${resumeData.languages.map((l) => `${l.name} (${l.level})`).join(' | ')}`, type: 'info' },
+        ]);
+        break;
+      }
+
+      case 'hobbies': {
+        print([
+          { text: '--- PERSONAL DIRECTORY ---', type: 'accent' },
+          ...resumeData.hobbies.map((h) => ({
+            text: h.focus ? `  ${h.name} — ${h.description}` : `  ${h.name}`,
+            type: h.focus ? 'output' : 'info',
+          })),
+        ]);
+        break;
+      }
+
+      case 'projects': {
+        print([
           { text: '--- PROJECTS CATALOG ---', type: 'accent' },
           ...projectsData.map((p) => ({
             text: `[ID: ${p.id}] ${p.title} (${p.category}) - ${p.desc}`,
             type: 'output',
           })),
-          { text: 'Type "view <id>" (e.g. "view 1") for full details.', type: 'info' },
+          { text: 'Type "view <id>" for full details, or "open <id>" to launch it.', type: 'info' },
         ]);
         break;
+      }
 
-      case 'view':
-        const id = parseInt(args[1]);
-        if (!id || isNaN(id)) {
-          setHistory((prev) => [...prev, { text: 'ERROR: Specify a valid ID. Example: "view 1"', type: 'error' }]);
-          break;
-        }
-        const proj = projectsData.find((p) => p.id === id);
-        if (!proj) {
-          setHistory((prev) => [...prev, { text: `ERROR: Project ID ${id} not found.`, type: 'error' }]);
-          break;
-        }
-        setHistory((prev) => [
-          ...prev,
+      case 'view': {
+        const proj = resolveProject(args[1]);
+        if (!proj) break;
+        print([
           { text: `=== PROJECT: ${proj.title.toUpperCase()} ===`, type: 'accent' },
           { text: `CATEGORY: ${proj.category}`, type: 'output' },
           { text: `TECH STACK: ${proj.tech.join(' // ')}`, type: 'info' },
@@ -136,15 +295,41 @@ const Terminal = () => {
           ...(proj.liveUrl ? [{ text: `LIVE NODE: ${proj.liveUrl}`, type: 'info' }] : []),
         ]);
         break;
+      }
 
-      case 'skills':
-        setHistory((prev) => [
-          ...prev,
-          { text: '--- TECHNICAL SKILLS MATRIX ---', type: 'accent' },
-          { text: `SKILLS: ${resumeData.skills.join(', ')}`, type: 'output' },
-          { text: `LANGUAGES: ${resumeData.languages.map((l) => `${l.name} (${l.level})`).join(' | ')}`, type: 'info' },
+      case 'open': {
+        const proj = resolveProject(args[1]);
+        if (!proj) break;
+        const target = proj.liveUrl || proj.github;
+        if (!target) {
+          print([{ text: `No public build or repository for "${proj.title}".`, type: 'warn' }]);
+          break;
+        }
+        print([{ text: `Launching ${target} ...`, type: 'info' }]);
+        window.open(target, '_blank', 'noopener,noreferrer');
+        SoundEffects.playSuccess();
+        break;
+      }
+
+      case 'contact': {
+        print([
+          { text: '--- CONTACT ---', type: 'accent' },
+          { text: `EMAIL:    ${resumeData.email}`, type: 'output' },
+          { text: `LINKEDIN: ${resumeData.linkedin}`, type: 'output' },
+          { text: 'GITHUB:   https://github.com/AliAbdullah12347', type: 'output' },
+          { text: 'Open to Summer 2026 software engineering and AI/security internships.', type: 'info' },
         ]);
         break;
+      }
+
+      case 'history': {
+        if (cmdHistory.length === 0) {
+          print([{ text: 'No commands in this session yet.', type: 'info' }]);
+          break;
+        }
+        print(cmdHistory.map((c, i) => ({ text: `  ${String(i + 1).padStart(3)}  ${c}`, type: 'output' })));
+        break;
+      }
 
       case 'scan':
         runSimulatedScan();
@@ -158,19 +343,37 @@ const Terminal = () => {
         setHistory([]);
         break;
 
-      default:
-        setHistory((prev) => [
-          ...prev,
+      // Easter eggs
+      case 'sudo': {
+        print([{ text: 'decker is not in the sudoers file. This incident has been reported.', type: 'error' }]);
+        break;
+      }
+
+      case 'ls': {
+        print([{ text: 'about  experience  education  projects/  skills  hobbies  contact', type: 'output' }]);
+        break;
+      }
+
+      case 'exit': {
+        print([{ text: 'Session persists. Use the DASHBOARD tab to return to the HUD.', type: 'warn' }]);
+        break;
+      }
+
+      default: {
+        const suggestion = suggestCommand(command);
+        print([
           { text: `ERROR: Command "${command}" not recognized. Type "help".`, type: 'error' },
+          ...(suggestion ? [{ text: `Did you mean "${suggestion}"?`, type: 'info' }] : []),
         ]);
         break;
+      }
     }
   };
 
   const runSimulatedScan = () => {
     setIsScanning(true);
     SoundEffects.playScan();
-    
+
     let step = 0;
     const targets = [
       'Scanning local network nodes...',
@@ -179,17 +382,17 @@ const Terminal = () => {
       'Port 443/tcp [OPEN]   - SSL Encrypted socket active',
       'Port 3000/tcp[OPEN]   - Vite React development server',
       'Verifying SHA-256 signatures...',
-      'Scan result: Zero security vulnerabilities identified. Site ready for Vercel deployment.'
+      'Scan result: Zero security vulnerabilities identified. Site ready for Vercel deployment.',
     ];
 
     const runStep = () => {
       if (step < targets.length) {
         setHistory((prev) => [
-          ...prev, 
-          { 
-            text: targets[step], 
-            type: step === 2 || step === 4 ? 'warn' : step === 6 ? 'accent' : 'output' 
-          }
+          ...prev,
+          {
+            text: targets[step],
+            type: step === 2 || step === 4 ? 'warn' : step === 6 ? 'accent' : 'output',
+          },
         ]);
         step++;
         setTimeout(runStep, 400);
@@ -205,7 +408,7 @@ const Terminal = () => {
   const runSimulatedDecryption = () => {
     setIsDecrypting(true);
     setHistory((prev) => [...prev, { text: 'DECRYPTING ALUMNI SCHOLAR DATA NODE...', type: 'error' }]);
-    
+
     let ticks = 0;
     const maxTicks = 8;
 
@@ -227,12 +430,12 @@ const Terminal = () => {
           updated.pop();
           return [
             ...updated,
-            { text: '==================================================', type: 'accent' },
+            { text: RULE, type: 'accent' },
             { text: 'DECRYPTION SUCCESSFUL', type: 'accent' },
             { text: `EMAIL: ${resumeData.email}`, type: 'output' },
             { text: `LINKEDIN: ${resumeData.linkedin}`, type: 'output' },
             { text: `VERCEL HOST: ${resumeData.vercelUrl}`, type: 'output' },
-            { text: '==================================================', type: 'accent' },
+            { text: RULE, type: 'accent' },
           ];
         });
         setIsDecrypting(false);
@@ -268,9 +471,9 @@ const Terminal = () => {
             </div>
           );
         })}
-        
-        {isScanning && <div className="terminal-line warn">SCANNING... ⬤</div>}
-        {isDecrypting && <div className="terminal-line error">DECRYPTING... ⬤</div>}
+
+        {isScanning && <div className="terminal-line warn">SCANNING... &#11044;</div>}
+        {isDecrypting && <div className="terminal-line error">DECRYPTING... &#11044;</div>}
 
         {!isScanning && !isDecrypting && (
           <div className="terminal-input-row">
@@ -283,6 +486,9 @@ const Terminal = () => {
               onChange={(e) => setInputVal(e.target.value)}
               onKeyDown={handleKeyDown}
               disabled={isScanning || isDecrypting}
+              autoComplete="off"
+              autoCapitalize="off"
+              spellCheck="false"
               aria-label="Terminal command input"
             />
           </div>

@@ -28,3 +28,6 @@ Thumbs.db
 
 # Antigravity logs & temp
 .gemini/
+
+# Claude Code local tooling
+.claude/

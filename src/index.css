@@ -250,6 +250,25 @@ body {
   pointer-events: none;
 }
 
+/* Scroll reveal. Deliberately scoped to no-preference: the hidden start state
+   must never exist for reduced-motion visitors, because the blanket reduce rule
+   below zeroes the transition that would otherwise bring it back. */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.55s cubic-bezier(0.2, 0.8, 0.2, 1),
+                transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: opacity, transform;
+  }
+
+  .reveal.revealed {
+    opacity: 1;
+    transform: none;
+    will-change: auto;
+  }
+}
+
 /* Layout Utilities */
 .hud-container {
   max-width: 1400px;

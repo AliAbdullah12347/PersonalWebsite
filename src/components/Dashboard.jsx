@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { projectsData } from '../data/projectsData';
 import { resumeData } from '../data/resumeData';
 import { SoundEffects } from '../utils/SoundEffects';
@@ -9,7 +9,66 @@ import {
 } from 'lucide-react';
 
 
+// Reveals each panel as it scrolls in.
+//
+// Content visibility must never depend on this working. IntersectionObserver
+// does not fire in a background tab, so a visitor who middle-clicks the link
+// would otherwise focus the tab to a completely blank page. Anything that
+// might stop the observer running reveals everything up front instead:
+// reduced-motion, no IO support, mounting while hidden, or a 3s dead-man
+// timer for cases none of those catch.
+const useScrollReveal = () => {
+  const rootRef = useRef(null);
+
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return undefined;
+
+    const targets = Array.from(root.querySelectorAll('.reveal'));
+    if (!targets.length) return undefined;
+
+    const revealAll = () => targets.forEach((el) => el.classList.add('revealed'));
+
+    const cannotObserve =
+      typeof IntersectionObserver === 'undefined' ||
+      document.hidden ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (cannotObserve) {
+      revealAll();
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target); // reveal once, never re-hide
+        });
+      },
+      { rootMargin: '0px 0px -10% 0px', threshold: 0.05 }
+    );
+
+    targets.forEach((el) => observer.observe(el));
+
+    // Dead-man switch: if nothing has been revealed by now the observer is not
+    // working, and a visible page beats an animated one.
+    const failsafe = setTimeout(() => {
+      if (!targets.some((el) => el.classList.contains('revealed'))) revealAll();
+    }, 3000);
+
+    return () => {
+      clearTimeout(failsafe);
+      observer.disconnect();
+    };
+  }, []);
+
+  return rootRef;
+};
+
 const Dashboard = ({ onSelectProject }) => {
+  const revealRoot = useScrollReveal();
   const [filter, setFilter] = useState('ALL');
   const [emailForm, setEmailForm] = useState({ email: '', subject: '', message: '' });
   const [formSent, setFormSent] = useState(false);
@@ -62,10 +121,10 @@ ${emailForm.message}`)}`;
     : projectsData.filter((p) => p.category.toUpperCase().includes(filter));
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-xl)' }}>
+    <div ref={revealRoot} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-xl)' }}>
       
       {/* 1. HERO SECTION */}
-      <section id="hero" className="cyber-panel cut-corners hud-brackets" style={{ padding: 'var(--space-xl) var(--space-lg)' }}>
+      <section id="hero" className="cyber-panel cut-corners hud-brackets reveal" style={{ padding: 'var(--space-xl) var(--space-lg)' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', color: 'var(--color-neon-cyan)', fontSize: 'var(--text-sm)', fontFamily: 'var(--font-heading)', letterSpacing: '1px' }}>
             <Cpu size={16} className="spinning" style={{ flexShrink: 0, marginTop: '2px' }} />
@@ -123,7 +182,7 @@ ${emailForm.message}`)}`;
       </section>
 
       {/* 2. ABOUT ME SECTION */}
-      <section id="about" className="cyber-panel cut-corners">
+      <section id="about" className="cyber-panel cut-corners reveal">
         <div className="panel-header">
           <div className="title">
             <User size={16} />
@@ -152,7 +211,7 @@ ${emailForm.message}`)}`;
       </section>
 
       {/* 3. EXPERIENCE SECTION */}
-      <section id="experience" className="cyber-panel cut-corners">
+      <section id="experience" className="cyber-panel cut-corners reveal">
         <div className="panel-header">
           <div className="title">
             <Briefcase size={16} />
@@ -192,7 +251,7 @@ ${emailForm.message}`)}`;
       </section>
 
       {/* 4. MY PROJECTS SECTION */}
-      <section id="projects" className="cyber-panel cut-corners">
+      <section id="projects" className="cyber-panel cut-corners reveal">
         <div className="panel-header">
           <div className="title">
             <Layers size={16} />
@@ -275,7 +334,7 @@ ${emailForm.message}`)}`;
       {/* 5. SKILLS, EDUCATION & CERTIFICATIONS GRID */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 'var(--space-md)' }}>
         
-        <section id="skills" className="cyber-panel cut-corners">
+        <section id="skills" className="cyber-panel cut-corners reveal">
           <div className="panel-header">
             <div className="title">
               <Code size={16} />
@@ -289,7 +348,7 @@ ${emailForm.message}`)}`;
           </div>
         </section>
 
-        <section className="cyber-panel cut-corners">
+        <section className="cyber-panel cut-corners reveal">
           <div className="panel-header">
             <div className="title">
               <GraduationCap size={16} />
@@ -320,7 +379,7 @@ ${emailForm.message}`)}`;
           </div>
         </section>
 
-        <section className="cyber-panel cut-corners">
+        <section className="cyber-panel cut-corners reveal">
           <div className="panel-header">
             <div className="title">
               <Award size={16} color="var(--color-neon-magenta)" />
@@ -367,7 +426,7 @@ ${emailForm.message}`)}`;
       </div>
 
       {/* HOBBIES SECTION */}
-      <section id="hobbies" className="cyber-panel cut-corners">
+      <section id="hobbies" className="cyber-panel cut-corners reveal">
         <div className="panel-header">
           <div className="title">
             <Heart size={16} color="var(--color-neon-magenta)" />
@@ -429,7 +488,7 @@ ${emailForm.message}`)}`;
       </section>
 
       {/* 6. CONTACT SECTION */}
-      <section id="contact" className="cyber-panel cut-corners">
+      <section id="contact" className="cyber-panel cut-corners reveal">
         <div className="panel-header">
           <div className="title">
             <Mail size={16} />

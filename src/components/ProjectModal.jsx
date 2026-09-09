@@ -58,10 +58,10 @@ const ProjectModal = ({ project, onClose }) => {
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <ShieldAlert size={20} color="var(--color-neon-magenta)" />
             <div>
-              <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', color: 'var(--color-neon-cyan)', textTransform: 'uppercase' }}>
+              <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'var(--text-lg)', color: 'var(--color-neon-cyan)', textTransform: 'uppercase' }}>
                 PROJECT-FILE // {project.title}
               </h2>
-              <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', fontFamily: 'var(--font-body)' }}>
+              <div style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-muted)', fontFamily: 'var(--font-body)' }}>
                 SYSTEM CLASSIFICATION: CONFIDENTIAL // ACCESS LEVEL: DECKER
               </div>
             </div>
@@ -89,12 +89,12 @@ const ProjectModal = ({ project, onClose }) => {
                   href={project.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ color: 'var(--color-neon-green)', fontSize: '0.75rem', fontFamily: 'var(--font-body)', textDecoration: 'none' }}
+                  style={{ color: 'var(--color-neon-green)', fontSize: 'var(--text-xs)', fontFamily: 'var(--font-body)', textDecoration: 'none' }}
                 >
                   {project.github.replace('https://github.com/', '')}
                 </a>
               ) : (
-                <span style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', fontFamily: 'var(--font-body)' }}>
+                <span style={{ color: 'var(--color-text-muted)', fontSize: 'var(--text-xs)', fontFamily: 'var(--font-body)' }}>
                   {project.repoNote || 'Source not public'}
                 </span>
               )}
@@ -103,17 +103,17 @@ const ProjectModal = ({ project, onClose }) => {
 
           {/* Project Details */}
           <div>
-            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '0.9rem', color: 'var(--color-neon-cyan)', marginBottom: '8px', textTransform: 'uppercase' }}>
+            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: 'var(--text-base)', color: 'var(--color-neon-cyan)', marginBottom: '8px', textTransform: 'uppercase' }}>
               // System Overview
             </h3>
-            <p style={{ fontSize: '0.85rem', color: 'var(--color-text)', lineHeight: '1.6' }}>
+            <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text)', lineHeight: '1.6' }}>
               {project.longDesc || project.desc}
             </p>
           </div>
 
           {/* Tech Stack */}
           <div>
-            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '0.9rem', color: 'var(--color-neon-cyan)', marginBottom: '8px', textTransform: 'uppercase' }}>
+            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: 'var(--text-base)', color: 'var(--color-neon-cyan)', marginBottom: '8px', textTransform: 'uppercase' }}>
               // Deployed Stack
             </h3>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
@@ -126,7 +126,7 @@ const ProjectModal = ({ project, onClose }) => {
           {/* Technical Specs & STRIDE Threat Analysis */}
           <div className="threat-model-sec">
             <h3 className="threat-model-title">// STRIDE Threat Intelligence Assessment</h3>
-            <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginBottom: '12px' }}>
+            <p style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)', marginBottom: '12px' }}>
               Analysis of key security threat vectors and built-in architectural mitigations:
             </p>
             
@@ -155,7 +155,7 @@ const ProjectModal = ({ project, onClose }) => {
 
           {/* Architecture Block Diagram */}
           <div>
-            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '0.9rem', color: 'var(--color-neon-cyan)', marginBottom: '8px', textTransform: 'uppercase' }}>
+            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: 'var(--text-base)', color: 'var(--color-neon-cyan)', marginBottom: '8px', textTransform: 'uppercase' }}>
               // System Architecture Block Flow
             </h3>
             <div className="architecture-box">

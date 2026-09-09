@@ -67,16 +67,16 @@ ${emailForm.message}`)}`;
       {/* 1. HERO SECTION */}
       <section id="hero" className="cyber-panel cut-corners hud-brackets" style={{ padding: 'var(--space-xl) var(--space-lg)' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
-          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', color: 'var(--color-neon-cyan)', fontSize: '0.85rem', fontFamily: 'var(--font-heading)', letterSpacing: '1px' }}>
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', color: 'var(--color-neon-cyan)', fontSize: 'var(--text-sm)', fontFamily: 'var(--font-heading)', letterSpacing: '1px' }}>
             <Cpu size={16} className="spinning" style={{ flexShrink: 0, marginTop: '2px' }} />
             <span>ALUMNI MEMORIAL SCHOLAR ’28 // COLGATE CS & APPLIED MATH</span>
           </div>
 
-          <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', color: 'var(--color-text)', lineHeight: '1.2' }}>
+          <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 'var(--text-hero)', color: 'var(--color-text)', lineHeight: '1.2' }}>
             Hello, I'm <span style={{ color: 'var(--color-neon-cyan)', textShadow: 'var(--glow-cyan)' }}>Ali Abdullah</span>
           </h1>
 
-          <p style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)', color: 'var(--color-text)', maxWidth: '900px', lineHeight: '1.6' }}>
+          <p style={{ fontSize: 'var(--text-lead)', color: 'var(--color-text)', maxWidth: '900px', lineHeight: '1.6' }}>
             {resumeData.heroIntro}
           </p>
 
@@ -113,7 +113,7 @@ ${emailForm.message}`)}`;
             {resumeData.stats.map((stat) => (
               <div key={stat.label} className="sys-stat-item">
                 <span className="sys-stat-label">{stat.label}</span>
-                <span className="sys-stat-value" style={{ fontSize: '1.4rem', fontWeight: '700', color: 'var(--color-neon-cyan)', fontFamily: 'var(--font-heading)' }}>
+                <span className="sys-stat-value" style={{ fontSize: 'var(--text-xl)', fontWeight: '700', color: 'var(--color-neon-cyan)', fontFamily: 'var(--font-heading)' }}>
                   {stat.value}
                 </span>
               </div>
@@ -129,10 +129,10 @@ ${emailForm.message}`)}`;
             <User size={16} />
             <span>About Me</span>
           </div>
-          <span style={{ fontSize: '0.75rem', color: 'var(--color-neon-green)' }}>COLGATE CS & APPLIED MATH</span>
+          <span style={{ fontSize: 'var(--text-xs)', color: 'var(--color-neon-green)' }}>COLGATE CS & APPLIED MATH</span>
         </div>
         <div className="panel-body" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
-          <p style={{ fontSize: '0.95rem', lineHeight: '1.7', color: 'var(--color-text)' }}>
+          <p style={{ fontSize: 'var(--text-base)', lineHeight: '1.7', color: 'var(--color-text)' }}>
             {resumeData.aboutText}
           </p>
 
@@ -141,7 +141,7 @@ ${emailForm.message}`)}`;
               background: 'rgba(6, 6, 10, 0.6)', 
               borderLeft: '3px solid var(--color-neon-cyan)', 
               padding: 'var(--space-md)',
-              fontSize: '0.88rem',
+              fontSize: 'var(--text-sm)',
               color: 'var(--color-text)',
               lineHeight: '1.6'
             }}
@@ -162,7 +162,7 @@ ${emailForm.message}`)}`;
         <div className="panel-body" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-lg)' }}>
           {resumeData.experience.map((org, idx) => (
             <div key={idx} style={{ borderBottom: idx < resumeData.experience.length - 1 ? '1px solid var(--color-border)' : 'none', paddingBottom: 'var(--space-md)' }}>
-              <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', color: 'var(--color-neon-cyan)', marginBottom: 'var(--space-sm)' }}>
+              <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: 'var(--text-lg)', color: 'var(--color-neon-cyan)', marginBottom: 'var(--space-sm)' }}>
                 {org.company}
               </h3>
 
@@ -170,15 +170,15 @@ ${emailForm.message}`)}`;
                 {org.roles.map((role, rIdx) => (
                   <div key={rIdx} style={{ paddingLeft: 'var(--space-md)', borderLeft: '2px solid var(--color-border)' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '4px' }}>
-                      <span style={{ fontWeight: '700', color: 'var(--color-text)', fontSize: '0.95rem' }}>
+                      <span style={{ fontWeight: '700', color: 'var(--color-text)', fontSize: 'var(--text-base)' }}>
                         {role.title}
                       </span>
-                      <span style={{ fontSize: '0.75rem', color: 'var(--color-neon-green)', fontFamily: 'var(--font-body)' }}>
+                      <span style={{ fontSize: 'var(--text-xs)', color: 'var(--color-neon-green)', fontFamily: 'var(--font-body)' }}>
                         {role.period}
                       </span>
                     </div>
 
-                    <ul className="hud-list" style={{ marginTop: '8px', fontSize: '0.85rem', color: 'var(--color-text-muted)', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                    <ul className="hud-list" style={{ marginTop: '8px', fontSize: 'var(--text-sm)', color: 'var(--color-text-muted)', display: 'flex', flexDirection: 'column', gap: '6px' }}>
                       {role.bullets.map((b, bIdx) => (
                         <li key={bIdx}>{b}</li>
                       ))}
@@ -198,7 +198,7 @@ ${emailForm.message}`)}`;
             <Layers size={16} />
             <span>My Projects</span>
           </div>
-          <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
+          <span style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)' }}>
             RECORDS: {filteredProjects.length}/{projectsData.length}
           </span>
         </div>
@@ -218,7 +218,7 @@ ${emailForm.message}`)}`;
                 </button>
               ))}
             </div>
-            <div style={{ display: 'flex', gap: '8px', alignItems: 'center', color: 'var(--color-text-muted)', fontSize: '0.75rem' }}>
+            <div style={{ display: 'flex', gap: '8px', alignItems: 'center', color: 'var(--color-text-muted)', fontSize: 'var(--text-xs)' }}>
               <RefreshCw size={12} className="spinning" />
               <span>DYNAMIC NODE VIEW</span>
             </div>
@@ -299,20 +299,20 @@ ${emailForm.message}`)}`;
           <div className="panel-body" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
             {resumeData.education.map((edu, idx) => (
               <div key={idx} style={{ borderLeft: '2px solid var(--color-neon-green)', paddingLeft: 'var(--space-sm)' }}>
-                <div style={{ fontWeight: '700', color: 'var(--color-text)', fontSize: '0.9rem' }}>
+                <div style={{ fontWeight: '700', color: 'var(--color-text)', fontSize: 'var(--text-base)' }}>
                   {edu.institution}
                 </div>
                 {edu.degree && (
-                  <div style={{ fontSize: '0.8rem', color: 'var(--color-neon-cyan)' }}>
+                  <div style={{ fontSize: 'var(--text-xs)', color: 'var(--color-neon-cyan)' }}>
                     {edu.degree}
                   </div>
                 )}
                 {edu.details && (
-                  <div style={{ fontSize: '0.75rem', color: 'var(--color-neon-green)' }}>
+                  <div style={{ fontSize: 'var(--text-xs)', color: 'var(--color-neon-green)' }}>
                     {edu.details}
                   </div>
                 )}
-                <div style={{ fontSize: '0.7rem', color: 'var(--color-text-muted)' }}>
+                <div style={{ fontSize: 'var(--text-2xs)', color: 'var(--color-text-muted)' }}>
                   {edu.period}
                 </div>
               </div>
@@ -329,10 +329,10 @@ ${emailForm.message}`)}`;
           </div>
           <div className="panel-body" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
             <div>
-              <h4 style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', textTransform: 'uppercase', marginBottom: '6px' }}>
+              <h4 style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)', textTransform: 'uppercase', marginBottom: '6px' }}>
                 Certifications
               </h4>
-              <ul className="hud-list" style={{ fontSize: '0.85rem', color: 'var(--color-text)' }}>
+              <ul className="hud-list" style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text)' }}>
                 {resumeData.certifications.map((c, i) => (
                   <li key={i}>{c}</li>
                 ))}
@@ -340,10 +340,10 @@ ${emailForm.message}`)}`;
             </div>
 
             <div>
-              <h4 style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', textTransform: 'uppercase', marginBottom: '6px' }}>
+              <h4 style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)', textTransform: 'uppercase', marginBottom: '6px' }}>
                 Honors & Awards
               </h4>
-              <ul className="hud-list" style={{ fontSize: '0.8rem', color: 'var(--color-neon-cyan)', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              <ul className="hud-list" style={{ fontSize: 'var(--text-xs)', color: 'var(--color-neon-cyan)', display: 'flex', flexDirection: 'column', gap: '4px' }}>
                 {resumeData.honors.map((h, i) => (
                   <li key={i}>{h}</li>
                 ))}
@@ -351,12 +351,12 @@ ${emailForm.message}`)}`;
             </div>
 
             <div>
-              <h4 style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', textTransform: 'uppercase', marginBottom: '6px' }}>
+              <h4 style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)', textTransform: 'uppercase', marginBottom: '6px' }}>
                 Languages
               </h4>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
                 {resumeData.languages.map((l) => (
-                  <span key={l.name} style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', border: '1px solid var(--color-border)', padding: '2px 6px' }}>
+                  <span key={l.name} style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)', border: '1px solid var(--color-border)', padding: '2px 6px' }}>
                     {l.name} ({l.level})
                   </span>
                 ))}
@@ -373,7 +373,7 @@ ${emailForm.message}`)}`;
             <Heart size={16} color="var(--color-neon-magenta)" />
             <span>Hobbies & Passions</span>
           </div>
-          <span style={{ fontSize: '0.75rem', color: 'var(--color-neon-cyan)' }}>PERSONAL DIRECTORY</span>
+          <span style={{ fontSize: 'var(--text-xs)', color: 'var(--color-neon-cyan)' }}>PERSONAL DIRECTORY</span>
         </div>
         <div className="panel-body" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-lg)' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 'var(--space-md)' }}>
@@ -383,7 +383,7 @@ ${emailForm.message}`)}`;
               <h3 className="hobby-title" style={{ color: 'var(--color-neon-cyan)' }}>
                 <CircleDot size={16} /> Table Tennis
               </h3>
-              <p style={{ fontSize: '0.85rem', color: 'var(--color-text)', lineHeight: '1.6' }}>
+              <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text)', lineHeight: '1.6' }}>
                 {tableTennis.description}
               </p>
             </div>
@@ -394,7 +394,7 @@ ${emailForm.message}`)}`;
                 <h3 className="hobby-title" style={{ color: 'var(--color-neon-magenta)' }}>
                   <Feather size={16} /> Urdu Poetry &amp; Ghazals
                 </h3>
-                <p style={{ fontSize: '0.85rem', color: 'var(--color-text)', lineHeight: '1.6', marginBottom: '12px' }}>
+                <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text)', lineHeight: '1.6', marginBottom: '12px' }}>
                   {urduPoetry.description}
                 </p>
               </div>
@@ -416,7 +416,7 @@ ${emailForm.message}`)}`;
 
           {/* Other Passions */}
           <div>
-            <h4 style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', textTransform: 'uppercase', marginBottom: '8px', letterSpacing: '1px' }}>
+            <h4 style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)', textTransform: 'uppercase', marginBottom: '8px', letterSpacing: '1px' }}>
               Other Core Passions
             </h4>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
@@ -439,10 +439,10 @@ ${emailForm.message}`)}`;
         <div className="panel-body" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 'var(--space-xl)' }}>
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
-            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.2rem', color: 'var(--color-neon-cyan)' }}>
+            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: 'var(--text-lg)', color: 'var(--color-neon-cyan)' }}>
               Open for Opportunities
             </h3>
-            <p style={{ fontSize: '0.9rem', color: 'var(--color-text)', lineHeight: '1.6' }}>
+            <p style={{ fontSize: 'var(--text-base)', color: 'var(--color-text)', lineHeight: '1.6' }}>
               I'm currently looking for new opportunities, my inbox is always open. Whether you have a question or just want to say hi, I'll try my best to get back to you!
             </p>
 
@@ -450,7 +450,7 @@ ${emailForm.message}`)}`;
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
                 <a
                   href={`mailto:${resumeData.email}`}
-                  style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-text)', textDecoration: 'none', fontSize: '0.88rem' }}
+                  style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-text)', textDecoration: 'none', fontSize: 'var(--text-sm)' }}
                 >
                   <Mail size={16} color="var(--color-neon-cyan)" />
                   {resumeData.email}
@@ -469,7 +469,7 @@ ${emailForm.message}`)}`;
                 href={resumeData.linkedin} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-text)', textDecoration: 'none', fontSize: '0.88rem' }}
+                style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-text)', textDecoration: 'none', fontSize: 'var(--text-sm)' }}
               >
                 <Linkedin size={16} color="var(--color-neon-cyan)" />
                 linkedin.com/in/{resumeData.linkedinHandle}
@@ -478,7 +478,7 @@ ${emailForm.message}`)}`;
                 href={resumeData.github} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-text)', textDecoration: 'none', fontSize: '0.88rem' }}
+                style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-text)', textDecoration: 'none', fontSize: 'var(--text-sm)' }}
               >
                 <Github size={16} color="var(--color-neon-cyan)" />
                 github.com/{resumeData.githubHandle}

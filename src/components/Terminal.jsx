@@ -455,7 +455,7 @@ const Terminal = () => {
           <span className="win-dot green"></span>
         </div>
         <div className="terminal-window-title">&lt; DECKER SHELL // COLGATE NODE &gt;</div>
-        <div style={{ color: 'var(--color-neon-cyan)', fontSize: '0.7rem' }}>ACTIVE</div>
+        <div style={{ color: 'var(--color-neon-cyan)', fontSize: 'var(--text-2xs)' }}>ACTIVE</div>
       </div>
       <div className="terminal-body">
         {history.map((line, idx) => {

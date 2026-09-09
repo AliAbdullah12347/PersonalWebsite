@@ -22,6 +22,19 @@
   --font-heading: 'Orbitron', sans-serif;
   --font-body: 'JetBrains Mono', monospace;
 
+  /* Type scale. The page previously used 13 ad-hoc inline sizes, several of
+     them a hair apart (0.85 vs 0.88, 0.9 vs 0.95) — differences too small to
+     read as intentional but enough to stop the page feeling systematic.
+     Collapsed to seven deliberate steps, roughly a 1.12-1.2 ratio. */
+  --text-2xs: 0.68rem;
+  --text-xs: 0.78rem;
+  --text-sm: 0.86rem;
+  --text-base: 0.95rem;
+  --text-lg: 1.15rem;
+  --text-xl: 1.4rem;
+  --text-lead: clamp(1rem, 1.4vw, 1.2rem);
+  --text-hero: clamp(2rem, 4.5vw, 3rem);
+
   /* Layout Spacing */
   --space-xs: 4px;
   --space-sm: 8px;
@@ -195,7 +208,7 @@ body {
   color: var(--color-neon-cyan);
   padding: 10px 16px;
   font-family: var(--font-body);
-  font-size: 0.8rem;
+  font-size: var(--text-xs);
   text-transform: uppercase;
   text-decoration: none;
 }
@@ -284,7 +297,7 @@ body {
   gap: 6px;
   font-family: var(--font-heading);
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: var(--text-base);
   letter-spacing: 1px;
   color: var(--color-neon-cyan);
   text-shadow: var(--glow-cyan);
@@ -295,7 +308,7 @@ body {
 
 .hud-logo span {
   color: var(--color-text-muted);
-  font-size: 0.7rem;
+  font-size: var(--text-2xs);
   border: 1px solid var(--color-border);
   padding: 1px 5px;
   background: var(--bg-void);
@@ -333,7 +346,7 @@ body {
   color: var(--color-text);
   padding: 6px 12px;
   font-family: var(--font-body);
-  font-size: 0.78rem;
+  font-size: var(--text-xs);
   cursor: pointer;
   transition: all 0.2s ease;
   display: inline-flex;
@@ -377,7 +390,7 @@ body {
 }
 
 .switch-label {
-  font-size: 0.7rem;
+  font-size: var(--text-2xs);
   color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -472,7 +485,7 @@ input:checked + .switch-slider:before {
   left: 8px;
   font-family: var(--font-heading);
   color: var(--color-neon-cyan);
-  font-size: 0.8rem;
+  font-size: var(--text-xs);
   opacity: 0.7;
 }
 
@@ -483,7 +496,7 @@ input:checked + .switch-slider:before {
   right: 8px;
   font-family: var(--font-heading);
   color: var(--color-neon-cyan);
-  font-size: 0.8rem;
+  font-size: var(--text-xs);
   opacity: 0.7;
 }
 
@@ -495,7 +508,7 @@ input:checked + .switch-slider:before {
   justify-content: space-between;
   align-items: center;
   font-family: var(--font-heading);
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   letter-spacing: 1px;
   font-weight: 600;
   text-transform: uppercase;
@@ -518,7 +531,7 @@ input:checked + .switch-slider:before {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: var(--space-md);
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
 }
 
 .sys-stat-item {
@@ -529,7 +542,7 @@ input:checked + .switch-slider:before {
 
 .sys-stat-label {
   color: var(--color-text-muted);
-  font-size: 0.7rem;
+  font-size: var(--text-2xs);
   text-transform: uppercase;
 }
 
@@ -541,7 +554,7 @@ input:checked + .switch-slider:before {
 .input {
   padding: 10px 14px;
   border: 1px solid var(--color-border);
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   font-family: var(--font-body);
   transition: border-color 200ms ease;
   outline: none;
@@ -561,7 +574,7 @@ input:checked + .switch-slider:before {
   border: 1px solid var(--color-border);
   color: var(--color-text-muted);
   font-family: var(--font-body);
-  font-size: 0.65rem;
+  font-size: var(--text-2xs);
   letter-spacing: 1px;
   padding: 2px 8px;
   cursor: pointer;
@@ -593,7 +606,7 @@ input:checked + .switch-slider:before {
   background: transparent;
   border: 1px solid var(--color-border);
   color: var(--color-text-muted);
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   padding: 3px 8px;
   cursor: pointer;
   font-family: var(--font-body);
@@ -664,7 +677,7 @@ input:checked + .switch-slider:before {
   align-items: center;
   justify-content: center;
   font-family: var(--font-heading);
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   letter-spacing: 2px;
   color: var(--color-text-muted);
   opacity: 0.4;
@@ -704,7 +717,7 @@ input:checked + .switch-slider:before {
   background: rgba(0,0,0,0.85);
   border: 1px solid var(--color-border);
   color: var(--color-neon-cyan);
-  font-size: 0.7rem;
+  font-size: var(--text-2xs);
   padding: 2px 6px;
   font-family: var(--font-body);
   text-transform: uppercase;
@@ -720,7 +733,7 @@ input:checked + .switch-slider:before {
 
 .project-card-title {
   font-family: var(--font-heading);
-  font-size: 0.95rem;
+  font-size: var(--text-base);
   color: var(--color-text);
   font-weight: 700;
 }
@@ -730,7 +743,7 @@ input:checked + .switch-slider:before {
 }
 
 .project-card-desc {
-  font-size: 0.8rem;
+  font-size: var(--text-xs);
   color: var(--color-text-muted);
   line-height: 1.4;
 }
@@ -744,7 +757,7 @@ input:checked + .switch-slider:before {
 }
 
 .tech-tag {
-  font-size: 0.65rem;
+  font-size: var(--text-2xs);
   color: var(--color-text-muted);
   border: 1px solid var(--color-border);
   padding: 1px 5px;
@@ -779,7 +792,7 @@ input:checked + .switch-slider:before {
   background: rgba(0, 240, 255, 0.05);
   color: var(--color-neon-cyan);
   padding: 6px 12px;
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   font-family: var(--font-body);
   transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -795,7 +808,7 @@ input:checked + .switch-slider:before {
   background: rgba(255, 0, 127, 0.04);
   color: var(--color-text);
   padding: 4px 10px;
-  font-size: 0.8rem;
+  font-size: var(--text-xs);
 }
 
 .skill-chip.accent:hover {
@@ -822,7 +835,7 @@ input:checked + .switch-slider:before {
   align-items: center;
   gap: var(--space-sm);
   font-family: var(--font-heading);
-  font-size: 0.95rem;
+  font-size: var(--text-base);
   margin-bottom: 8px;
   text-transform: uppercase;
 }
@@ -831,7 +844,7 @@ input:checked + .switch-slider:before {
    readable where none of the named faces are installed. */
 .urdu-couplet {
   font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', 'Urdu Typesetting', serif;
-  font-size: 1.15rem;
+  font-size: var(--text-lg);
   line-height: 2.1;
   color: var(--color-neon-green);
   text-align: right;
@@ -847,7 +860,7 @@ input:checked + .switch-slider:before {
   gap: 2px;
   margin-top: 8px;
   text-align: right;
-  font-size: 0.7rem;
+  font-size: var(--text-2xs);
 }
 
 .urdu-translation {
@@ -876,7 +889,7 @@ input:checked + .switch-slider:before {
   justify-content: space-between;
   align-items: center;
   font-family: var(--font-heading);
-  font-size: 0.8rem;
+  font-size: var(--text-xs);
   letter-spacing: 1px;
 }
 
@@ -899,7 +912,7 @@ input:checked + .switch-slider:before {
   overflow-y: auto;
   flex-grow: 1;
   font-family: var(--font-body);
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   color: var(--color-neon-green);
   display: flex;
   flex-direction: column;
@@ -930,7 +943,7 @@ input:checked + .switch-slider:before {
   border: none;
   color: var(--color-neon-green);
   font-family: var(--font-body);
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   outline: none;
   flex-grow: 1;
 }
@@ -993,7 +1006,7 @@ input:checked + .switch-slider:before {
 }
 
 .modal-tech-tag {
-  font-size: 0.72rem;
+  font-size: var(--text-xs);
   color: var(--color-neon-cyan);
   border: 1px solid var(--color-border);
   background: rgba(0, 240, 255, 0.05);
@@ -1033,7 +1046,7 @@ input:checked + .switch-slider:before {
   border: 1px solid var(--color-neon-green);
   color: var(--color-neon-green);
   background: rgba(0, 255, 102, 0.06);
-  font-size: 0.62rem;
+  font-size: var(--text-2xs);
   letter-spacing: 1px;
   padding: 3px 8px;
   text-transform: uppercase;
@@ -1065,7 +1078,7 @@ input:checked + .switch-slider:before {
 
 .threat-model-title {
   font-family: var(--font-heading);
-  font-size: 0.9rem;
+  font-size: var(--text-base);
   color: var(--color-neon-magenta);
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -1092,14 +1105,14 @@ input:checked + .switch-slider:before {
 }
 
 .threat-score-name {
-  font-size: 0.68rem;
+  font-size: var(--text-2xs);
   letter-spacing: 1px;
   color: var(--color-text-muted);
   white-space: nowrap;
 }
 
 .threat-score-val {
-  font-size: 0.65rem;
+  font-size: var(--text-2xs);
   white-space: nowrap;
 }
 .threat-score-val.low  { color: var(--color-neon-green); }
@@ -1149,7 +1162,7 @@ input:checked + .switch-slider:before {
   color: var(--color-text-muted);
   padding: var(--space-md) var(--space-sm);
   text-align: center;
-  font-size: 0.7rem;
+  font-size: var(--text-2xs);
   line-height: 1.5;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -1167,7 +1180,7 @@ input:checked + .switch-slider:before {
   align-items: center;
   color: var(--color-neon-cyan);
   font-family: var(--font-heading);
-  font-size: 0.9rem;
+  font-size: var(--text-base);
   opacity: 0.7;
   animation: cyber-pulse 2s ease-in-out infinite;
 }
@@ -1184,7 +1197,7 @@ input:checked + .switch-slider:before {
   flex-wrap: wrap;
   text-align: center;
   font-family: var(--font-body);
-  font-size: 0.7rem;
+  font-size: var(--text-2xs);
   color: var(--color-text-muted);
 }
 
@@ -1217,7 +1230,7 @@ input:checked + .switch-slider:before {
   }
   .hud-button {
     padding: 4px 8px;
-    font-size: 0.72rem;
+    font-size: var(--text-xs);
   }
   .arch-connector {
     transform: rotate(90deg);

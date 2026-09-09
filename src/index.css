@@ -351,6 +351,14 @@ body {
   text-shadow: 0 0 5px rgba(0, 240, 255, 0.5);
 }
 
+/* Scroll-spy: the section currently under the reader. Distinct from .active,
+   which marks the selected DASHBOARD/SHELL tab. */
+.hud-button.current {
+  color: var(--color-neon-green);
+  border-color: var(--color-neon-green);
+  text-shadow: 0 0 5px rgba(0, 255, 102, 0.5);
+}
+
 .hud-button.accent {
   border-color: var(--color-neon-magenta);
   color: var(--color-neon-magenta);

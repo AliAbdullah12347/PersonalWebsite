@@ -9,16 +9,67 @@ import { Terminal as TerminalIcon, Layout, Volume2, VolumeX, Cpu } from 'lucide-
 import { Analytics } from '@vercel/analytics/react';
 
 
+// Dashboard sections, in document order — drives both the nav strip and the
+// scroll-spy highlight below.
+const SECTIONS = [
+  { id: 'about', label: 'ABOUT' },
+  { id: 'experience', label: 'EXPERIENCE' },
+  { id: 'projects', label: 'PROJECTS' },
+  { id: 'skills', label: 'SKILLS' },
+  { id: 'hobbies', label: 'HOBBIES' },
+  { id: 'contact', label: 'CONTACT' },
+];
+
+const SPY_IDS = ['hero', ...SECTIONS.map((s) => s.id)];
+
 function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [crtActive, setCrtActive] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [activeSection, setActiveSection] = useState('hero');
 
   useEffect(() => {
     SoundEffects.setMuted(false);
     SoundEffects.playBoot();
   }, []);
+
+  // Highlight whichever section the reader is actually looking at. Throttled
+  // to one rAF per scroll burst so this stays off the critical path.
+  useEffect(() => {
+    if (activeTab !== 'dashboard') return undefined;
+
+    let queued = false;
+
+    const update = () => {
+      queued = false;
+      const marker = window.innerHeight * 0.3;
+      let current = SPY_IDS[0];
+      for (const id of SPY_IDS) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= marker) current = id;
+      }
+
+      // The final section is shorter than the scroll runway left below it, so
+      // its top never reaches the marker. Treat "scrolled to the bottom" as
+      // being in the last section.
+      const atBottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+      if (atBottom) current = SPY_IDS[SPY_IDS.length - 1];
+
+      setActiveSection((prev) => (prev === current ? prev : current));
+    };
+
+    const onScroll = () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(update);
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    update();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [activeTab]);
 
   const handleTabChange = (tab) => {
     SoundEffects.playToggle();
@@ -95,12 +146,19 @@ function App() {
               <Layout size={13} /> DASHBOARD
             </button>
 
-            <button className="hud-button" onClick={() => scrollToSection('about')}>ABOUT</button>
-            <button className="hud-button" onClick={() => scrollToSection('experience')}>EXPERIENCE</button>
-            <button className="hud-button" onClick={() => scrollToSection('projects')}>PROJECTS</button>
-            <button className="hud-button" onClick={() => scrollToSection('skills')}>SKILLS</button>
-            <button className="hud-button" onClick={() => scrollToSection('hobbies')}>HOBBIES</button>
-            <button className="hud-button" onClick={() => scrollToSection('contact')}>CONTACT</button>
+            {SECTIONS.map((section) => {
+              const isCurrent = activeTab === 'dashboard' && activeSection === section.id;
+              return (
+                <button
+                  key={section.id}
+                  className={`hud-button ${isCurrent ? 'current' : ''}`}
+                  aria-current={isCurrent ? 'true' : undefined}
+                  onClick={() => scrollToSection(section.id)}
+                >
+                  {section.label}
+                </button>
+              );
+            })}
 
             <button 
               className={`hud-button ${activeTab === 'terminal' ? 'active' : ''}`}

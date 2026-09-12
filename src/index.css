@@ -13,7 +13,11 @@
   --color-neon-magenta: #ff007f;
   --color-neon-yellow: #ffea00;
   --color-text: #e2e2ec;
+  /* Two jobs, two tones. --text-muted stays low-contrast for decorative HUD
+     labels and meta; --text-dim is for secondary content that is actually read
+     (experience bullets, card descriptions) and clears AAA at 7.09:1. */
   --color-text-muted: #7e8092;
+  --color-text-dim: #9a9cb0;
   --color-border: #1e1e2f;
   --color-border-focus: #00f0ff;
   --color-grid-lines: rgba(0, 240, 255, 0.035);
@@ -1000,7 +1004,7 @@ textarea.input {
 
 .project-card-desc {
   font-size: var(--text-xs);
-  color: var(--color-text-muted);
+  color: var(--color-text-dim);
   line-height: 1.4;
 }
 
@@ -1129,7 +1133,7 @@ textarea.input {
 
 .urdu-translation {
   font-style: italic;
-  color: var(--color-text-muted);
+  color: var(--color-text-dim);
   opacity: 0.85;
 }
 

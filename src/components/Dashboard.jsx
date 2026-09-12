@@ -217,7 +217,7 @@ ${emailForm.message}`)}`;
                       </span>
                     </div>
 
-                    <ul className="hud-list" style={{ marginTop: '8px', fontSize: 'var(--text-sm)', color: 'var(--color-text-muted)', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                    <ul className="hud-list" style={{ marginTop: '8px', fontSize: 'var(--text-sm)', color: 'var(--color-text-dim)', display: 'flex', flexDirection: 'column', gap: '6px' }}>
                       {role.bullets.map((b, bIdx) => (
                         <li key={bIdx}>{b}</li>
                       ))}

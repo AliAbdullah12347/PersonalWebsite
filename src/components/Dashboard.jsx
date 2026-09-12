@@ -159,22 +159,11 @@ ${emailForm.message}`)}`;
           </div>
 
           {/* Key Stats Counter Strip */}
-          <div 
-            style={{ 
-              display: 'grid', 
-              gridTemplateColumns: 'repeat(auto-fit, minmax(min(130px, 100%), 1fr))', 
-              gap: 'var(--space-md)', 
-              marginTop: 'var(--space-lg)',
-              borderTop: '1px solid var(--color-border)',
-              paddingTop: 'var(--space-md)'
-            }}
-          >
+          <div className="hero-stats">
             {resumeData.stats.map((stat) => (
-              <div key={stat.label} className="sys-stat-item">
+              <div key={stat.label} className="hero-stat">
                 <span className="sys-stat-label">{stat.label}</span>
-                <span className="sys-stat-value" style={{ fontSize: 'var(--text-xl)', fontWeight: '700', color: 'var(--color-neon-cyan)', fontFamily: 'var(--font-heading)' }}>
-                  {stat.value}
-                </span>
+                <span className="hero-stat-value">{stat.value}</span>
               </div>
             ))}
           </div>

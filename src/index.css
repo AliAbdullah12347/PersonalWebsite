@@ -327,6 +327,54 @@ body {
   line-height: 1.7;
 }
 
+/* Hero readout strip. Divided cells rather than four floating label/value
+   pairs, so it reads as one instrument panel. */
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-md);
+}
+
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-left: var(--space-md);
+  border-left: 1px solid var(--color-border);
+}
+
+/* The first cell aligns with the text column above it */
+.hero-stat:first-child {
+  padding-left: 0;
+  border-left: none;
+}
+
+.hero-stat-value {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--color-neon-cyan);
+  text-shadow: 0 0 12px rgba(0, 240, 255, 0.28);
+  line-height: 1.2;
+}
+
+/* Stacked cells need the rule on top, not the side */
+@media (max-width: 620px) {
+  .hero-stat {
+    padding-left: 0;
+    border-left: none;
+    padding-top: var(--space-sm);
+    border-top: 1px solid var(--color-border);
+  }
+  .hero-stat:first-child {
+    padding-top: 0;
+    border-top: none;
+  }
+}
+
 /* Hero lead: capped by character count rather than a pixel width, which ran
    to ~84 characters per line at desktop — well past a comfortable measure. */
 .hero-lead {

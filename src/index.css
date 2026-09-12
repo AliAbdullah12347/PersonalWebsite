@@ -332,6 +332,7 @@ body {
 .panel-body li,
 .summary-callout {
   max-width: 78ch;
+  line-height: 1.75;
 }
 
 .summary-callout {
@@ -350,7 +351,7 @@ body {
 .dashboard-sections {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xl);
+  gap: 40px;
   counter-reset: section;
 }
 
@@ -816,7 +817,7 @@ input:checked + .switch-slider:before {
 
 .panel-header {
   border-bottom: 1px solid var(--color-border);
-  padding: var(--space-sm) var(--space-md);
+  padding: 11px var(--space-lg);
   background:
     linear-gradient(180deg, rgba(38, 41, 60, 0.94) 0%, rgba(28, 30, 45, 0.92) 100%);
   position: relative;
@@ -853,8 +854,16 @@ input:checked + .switch-slider:before {
 }
 
 .panel-body {
-  padding: var(--space-md);
+  padding: var(--space-lg);
   flex-grow: 1;
+}
+
+/* Narrow screens cannot spare 24px a side — the content column matters more
+   than the margin there. */
+@media (max-width: 600px) {
+  .panel-body {
+    padding: var(--space-md);
+  }
 }
 
 /* System Stats */

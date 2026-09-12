@@ -261,7 +261,7 @@ ${emailForm.message}`)}`;
           <div className="project-grid-bento">
             {filteredProjects.map((p) => (
               <div
-                className="project-card"
+                className={`project-card${p.featured && filter === 'ALL' ? ' featured' : ''}`}
                 key={p.id}
                 role="button"
                 tabIndex={0}
@@ -290,10 +290,15 @@ ${emailForm.message}`)}`;
                   />
                   <div className="project-card-overlay" />
                   <span className="project-tag">{p.category}</span>
+                  {p.featured && filter === 'ALL' && (
+                    <span className="project-flag">Featured Build</span>
+                  )}
                 </div>
                 <div className="project-card-body">
                   <h4 className="project-card-title">{p.title}</h4>
-                  <p className="project-card-desc">{p.desc}</p>
+                  <p className="project-card-desc">
+                    {p.featured && filter === 'ALL' ? p.longDesc : p.desc}
+                  </p>
                   <div className="project-card-tech">
                     {p.tech.map((t) => (
                       <span className="tech-tag" key={t}>{t}</span>

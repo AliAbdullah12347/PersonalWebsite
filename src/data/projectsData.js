@@ -3,6 +3,8 @@ export const projectsData = [
     id: 1,
     title: "Image Poisoning Web App",
     category: "AI / Security",
+    // Leads the grid as a 2x2 tile when no category filter is applied
+    featured: true,
     image: "/images/projects/image_poisoning.jpg",
     desc: "A web application that safeguards digital images from unauthorized AI training by injecting invisible, model-disrupting noise.",
     longDesc: "A web application designed to protect artist intellectual property and digital images from unauthorized machine learning scraped training datasets. It injects imperceptible, adversarial noise perturbations into image pixel matrices, causing downstream generative AI models to fail or misclassify features while maintaining human visual clarity.",

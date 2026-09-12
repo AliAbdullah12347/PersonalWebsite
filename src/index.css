@@ -48,6 +48,13 @@
   --glow-green: 0 0 10px rgba(0, 255, 102, 0.35), 0 0 20px rgba(0, 255, 102, 0.15);
   --glow-magenta: 0 0 10px rgba(255, 0, 127, 0.35), 0 0 20px rgba(255, 0, 127, 0.15);
   --panel-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+
+  /* Panel surface, hoisted so .cut-corners can re-layer it beneath the chamfer
+     border lines without restating the gradient. */
+  --panel-surface: linear-gradient(180deg, rgba(24, 24, 38, 0.9) 0%, rgba(14, 14, 23, 0.86) 55%, rgba(11, 11, 18, 0.88) 100%);
+  /* A 1.4px line on the square's main diagonal, used to draw the border back
+     along each chamfer that clip-path cuts away. */
+  --chamfer-edge: linear-gradient(45deg, transparent calc(50% - 0.7px), var(--color-border) calc(50% - 0.7px), var(--color-border) calc(50% + 0.7px), transparent calc(50% + 0.7px));
 }
 
 /* Global Reset & Base */
@@ -511,8 +518,7 @@ input:checked + .switch-slider:before {
 }
 
 .cyber-panel {
-  background:
-    linear-gradient(180deg, rgba(24, 24, 38, 0.9) 0%, rgba(14, 14, 23, 0.86) 55%, rgba(11, 11, 18, 0.88) 100%);
+  background: var(--panel-surface);
   border: 1px solid var(--color-border);
   box-shadow:
     var(--panel-shadow),
@@ -542,6 +548,13 @@ input:checked + .switch-slider:before {
     16px 100%, 
     0 calc(100% - 16px)
   );
+  /* clip-path cuts the corners out of the element, and the 1px border goes with
+     them — leaving the outline broken at the two chamfers. Paint the diagonals
+     back as background lines, sitting above the surface gradient. */
+  background:
+    var(--chamfer-edge) top right / 16px 16px no-repeat,
+    var(--chamfer-edge) bottom left / 16px 16px no-repeat,
+    var(--panel-surface);
 }
 
 .cyber-panel.hud-brackets::before {

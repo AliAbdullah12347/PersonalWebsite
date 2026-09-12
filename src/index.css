@@ -620,7 +620,10 @@ input:checked + .switch-slider:before {
   justify-content: space-between;
   align-items: center;
   font-family: var(--font-heading);
-  font-size: var(--text-sm);
+  /* Was --text-sm, i.e. smaller than the body copy it captions in the About and
+     Contact panels, and smaller than the org names nested inside it. A section
+     heading has to outrank both. */
+  font-size: var(--text-lg);
   letter-spacing: 1px;
   font-weight: 600;
   text-transform: uppercase;

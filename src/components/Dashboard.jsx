@@ -212,7 +212,7 @@ ${emailForm.message}`)}`;
         <div className="panel-body" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-lg)' }}>
           {resumeData.experience.map((org, idx) => (
             <div key={idx} style={{ borderBottom: idx < resumeData.experience.length - 1 ? '1px solid var(--color-border)' : 'none', paddingBottom: 'var(--space-md)' }}>
-              <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: 'var(--text-lg)', color: 'var(--color-neon-cyan)', marginBottom: 'var(--space-sm)' }}>
+              <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: 'var(--text-base)', color: 'var(--color-neon-cyan)', marginBottom: 'var(--space-sm)' }}>
                 {org.company}
               </h3>
 
@@ -489,7 +489,7 @@ ${emailForm.message}`)}`;
         <div className="panel-body" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(300px, 100%), 1fr))', gap: 'var(--space-xl)' }}>
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
-            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: 'var(--text-lg)', color: 'var(--color-neon-cyan)' }}>
+            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: 'var(--text-base)', color: 'var(--color-neon-cyan)' }}>
               Open for Opportunities
             </h3>
             <p style={{ fontSize: 'var(--text-base)', color: 'var(--color-text)', lineHeight: '1.6' }}>

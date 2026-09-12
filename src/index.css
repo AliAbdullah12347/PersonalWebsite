@@ -726,18 +726,47 @@ input:checked + .switch-slider:before {
   font-family: var(--font-body);
 }
 
+/* Form fields read as instrumentation rather than three grey boxes: recessed
+   surface, a leading channel that lights on focus, and a styled placeholder. */
 .input {
-  padding: 10px 14px;
+  width: 100%;
+  padding: 11px 14px;
+  background: rgba(3, 3, 6, 0.85);
   border: 1px solid var(--color-border);
+  border-left: 2px solid var(--color-border);
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+  color: var(--color-text);
   font-size: var(--text-sm);
   font-family: var(--font-body);
-  transition: border-color 200ms ease;
+  transition: border-color 200ms ease, box-shadow 200ms ease, background 200ms ease;
   outline: none;
+}
+
+.input::placeholder {
+  color: rgba(126, 128, 146, 0.6);
+  font-style: italic;
+}
+
+.input:hover {
+  border-color: #2a2a42;
+  border-left-color: #2a2a42;
 }
 
 .input:focus {
   border-color: var(--color-neon-cyan);
-  box-shadow: var(--glow-cyan);
+  border-left-color: var(--color-neon-cyan);
+  background: rgba(0, 240, 255, 0.03);
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5), var(--glow-cyan);
+}
+
+textarea.input {
+  resize: vertical;
+  min-height: 110px;
+}
+
+/* The caption above each field lights with it */
+.sys-stat-item:focus-within .sys-stat-label {
+  color: var(--color-neon-cyan);
 }
 
 /* Small inline copy-to-clipboard control */

@@ -534,7 +534,6 @@ ${emailForm.message}`)}`;
                 required
                 placeholder="jacob@google.com"
                 className="input"
-                style={{ width: '100%', background: 'var(--bg-void)', color: 'var(--color-text)' }}
                 value={emailForm.email}
                 onChange={(e) => setEmailForm({ ...emailForm, email: e.target.value })}
               />
@@ -547,7 +546,6 @@ ${emailForm.message}`)}`;
                 type="text"
                 placeholder="Just saying hi"
                 className="input"
-                style={{ width: '100%', background: 'var(--bg-void)', color: 'var(--color-text)' }}
                 value={emailForm.subject}
                 onChange={(e) => setEmailForm({ ...emailForm, subject: e.target.value })}
               />
@@ -561,7 +559,6 @@ ${emailForm.message}`)}`;
                 rows={4}
                 placeholder="Let's talk about..."
                 className="input"
-                style={{ width: '100%', background: 'var(--bg-void)', color: 'var(--color-text)', resize: 'vertical' }}
                 value={emailForm.message}
                 onChange={(e) => setEmailForm({ ...emailForm, message: e.target.value })}
               />

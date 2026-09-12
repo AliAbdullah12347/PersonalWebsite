@@ -699,6 +699,26 @@ input:checked + .switch-slider:before {
   color: var(--color-neon-green);
 }
 
+/* Skills / Education / Honors. auto-fit gives two columns from 768px to
+   ~1200px, which strands the third panel alone at half width for the entire
+   tablet and small-laptop range. In that band the last panel spans the row
+   instead — it carries the most content (certifications, honors, languages),
+   so the full width suits it. */
+.info-triptych {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+  gap: var(--space-md);
+}
+
+@media (min-width: 700px) and (max-width: 1199px) {
+  .info-triptych {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .info-triptych > :last-child {
+    grid-column: 1 / -1;
+  }
+}
+
 .project-grid-bento {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
@@ -834,6 +854,14 @@ input:checked + .switch-slider:before {
   flex-wrap: wrap;
   margin-top: auto;
   padding-top: var(--space-sm);
+}
+
+/* Pin to three columns on desktop: six projects over four columns leaves two
+   empty cells on the second row, over three it is two full rows. */
+@media (min-width: 1100px) {
+  .project-grid-bento {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .tech-tag {

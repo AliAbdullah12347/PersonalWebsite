@@ -323,7 +323,7 @@ ${emailForm.message}`)}`;
       </section>
 
       {/* 5. SKILLS, EDUCATION & CERTIFICATIONS GRID */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: 'var(--space-md)' }}>
+      <div className="info-triptych">
         
         <section id="skills" className="cyber-panel cut-corners reveal">
           <div className="panel-header">

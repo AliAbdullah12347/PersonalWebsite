@@ -28,6 +28,10 @@ const COMMANDS = COMMAND_HELP.map(([sig]) => sig.split(' ')[0]);
 const ID_COMMANDS = ['view', 'open'];
 const RULE = '==================================================';
 
+// Every line type the shell emits. Each has a matching .terminal-line.<type>
+// rule in index.css; anything not listed here falls back to 'output'.
+const LINE_TYPES = new Set(['output', 'prompt', 'accent', 'error', 'warn', 'info']);
+
 // Levenshtein distance, so a typo suggests the command it actually resembles
 // rather than the first one sharing a leading letter.
 const editDistance = (a, b) => {
@@ -459,11 +463,10 @@ const Terminal = () => {
       </div>
       <div className="terminal-body">
         {history.map((line, idx) => {
-          let lineClass = 'terminal-line output';
-          if (line.type === 'prompt') lineClass = 'terminal-line prompt';
-          if (line.type === 'accent') lineClass = 'terminal-line accent';
-          if (line.type === 'error') lineClass = 'terminal-line error';
-          if (line.type === 'warn') lineClass = 'terminal-line warn';
+          // 'info' was missing from this chain, so every hint line silently
+          // rendered as plain output. Driven off LINE_TYPES now, so a type that
+          // has no styling is a visible omission rather than a silent fallback.
+          const lineClass = `terminal-line ${LINE_TYPES.has(line.type) ? line.type : 'output'}`;
 
           return (
             <div key={idx} className={lineClass}>

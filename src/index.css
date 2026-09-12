@@ -1001,7 +1001,7 @@ input:checked + .switch-slider:before {
 }
 
 .terminal-line {
-  word-break: break-all;
+  overflow-wrap: anywhere;
   white-space: pre-wrap;
 }
 
@@ -1009,6 +1009,10 @@ input:checked + .switch-slider:before {
 .terminal-line.error { color: var(--color-neon-magenta); }
 .terminal-line.accent { color: var(--color-neon-cyan); }
 .terminal-line.warn { color: var(--color-neon-yellow); }
+/* Hints and secondary detail: cyan, but stepped back from .accent */
+.terminal-line.info { color: rgba(0, 240, 255, 0.62); }
+/* The echoed command, so it stands out from the output it produced */
+.terminal-line.prompt { color: var(--color-neon-green); font-weight: 700; }
 
 .terminal-input-row {
   display: flex;

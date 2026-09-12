@@ -41,17 +41,6 @@ export const resumeData = {
   summaryText:
     `A ${standing} at Colgate studying Computer Science & Applied Math, focused on artificial intelligence and cybersecurity. I have published AI ethics research through a Stanford-affiliated program, shipped production C# fixes as a software engineering intern, and built 3D visualization systems that four university courses now depend on. Seeking Summer ${targetSummer} software engineering or AI/security internships where the problems are genuinely hard.`,
 
-  // The eyebrow line directly above this strip already says "Alumni Memorial
-  // Scholar '28 // Colgate CS & Applied Math", so class year, scholarship and
-  // focus were all restatement. These are the largest figures on the page;
-  // they should carry proof. Each is drawn from an experience bullet below.
-  stats: [
-    { label: "Students Reached", value: "200+" },
-    { label: "Render Target", value: "60 FPS" },
-    { label: "Build Stability", value: "+30%" },
-    { label: "AI Ethics Research", value: "Published" }
-  ],
-
   experience: [
     {
       company: "Colgate University",

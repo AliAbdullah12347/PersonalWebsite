@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { projectsData } from '../data/projectsData';
 import { resumeData } from '../data/resumeData';
 import { SoundEffects } from '../utils/SoundEffects';
+import HeroTelemetry from './HeroTelemetry';
 import { 
   Cpu, Award, RefreshCw, Layers,
   Mail, Linkedin, Github, GraduationCap, Briefcase, 
@@ -158,15 +159,7 @@ ${emailForm.message}`)}`;
             </a>
           </div>
 
-          {/* Key Stats Counter Strip */}
-          <div className="hero-stats">
-            {resumeData.stats.map((stat) => (
-              <div key={stat.label} className="hero-stat">
-                <span className="sys-stat-label">{stat.label}</span>
-                <span className="hero-stat-value">{stat.value}</span>
-              </div>
-            ))}
-          </div>
+          <HeroTelemetry />
         </div>
       </section>
 

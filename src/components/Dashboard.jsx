@@ -122,7 +122,7 @@ ${emailForm.message}`)}`;
     : projectsData.filter((p) => p.category.toUpperCase().includes(filter));
 
   return (
-    <div ref={revealRoot} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-xl)' }}>
+    <div ref={revealRoot} className="dashboard-sections">
       
       {/* 1. HERO SECTION */}
       <section id="hero" className="cyber-panel cut-corners hud-brackets reveal" style={{ padding: 'var(--space-xl) var(--space-lg)' }}>

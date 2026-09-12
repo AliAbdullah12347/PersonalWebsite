@@ -331,6 +331,40 @@ body {
   line-height: 1.7;
 }
 
+/* Section designations. Numbering comes from a CSS counter rather than the
+   data, so sections cannot drift out of sequence when one is added or moved.
+   Incremented on .panel-header, so the hero — which has no header bar — is
+   correctly excluded without needing a special case. */
+.dashboard-sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  counter-reset: section;
+}
+
+.panel-header {
+  counter-increment: section;
+}
+
+.panel-header .title::before {
+  content: counter(section, decimal-leading-zero);
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  color: var(--color-neon-cyan);
+  opacity: 0.55;
+  padding-right: 2px;
+  border-right: 1px solid var(--color-border);
+  margin-right: 2px;
+  padding-inline-end: 10px;
+}
+
+/* The Skills / Education / Honors row is its own grid, so its panels would
+   restart the count; keep them in the parent's sequence. */
+.info-triptych {
+  counter-reset: none;
+}
+
 /* The name, glitched. The theme has promised this since the first commit —
    there was a glitch-skew keyframe sitting unused in the sheet — but the hero
    never actually did anything. Two offset copies in magenta and green sit under

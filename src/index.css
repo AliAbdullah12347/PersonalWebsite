@@ -821,11 +821,13 @@ input:checked + .switch-slider:before {
 }
 
 .project-card {
-  background: rgba(16, 16, 26, 0.4);
+  background: var(--panel-surface);
   border: 1px solid var(--color-border);
   position: relative;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: border-color 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+              box-shadow 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+              transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -833,8 +835,38 @@ input:checked + .switch-slider:before {
 
 .project-card:hover {
   border-color: var(--color-neon-cyan);
+  box-shadow: var(--glow-cyan), 0 12px 28px rgba(0, 0, 0, 0.55);
+  transform: translateY(-4px);
+}
+
+/* Press feedback: the card had none, so clicking it felt unresponsive right up
+   until the modal appeared. */
+.project-card:active {
+  transform: translateY(-1px) scale(0.995);
   box-shadow: var(--glow-cyan);
-  transform: translateY(-3px);
+}
+
+/* A sheen that crosses the card once on hover */
+.project-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 35%,
+    rgba(0, 240, 255, 0.07) 48%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(0, 240, 255, 0.07) 52%,
+    transparent 65%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.project-card:hover::after {
+  transform: translateX(120%);
 }
 
 .project-card::before {

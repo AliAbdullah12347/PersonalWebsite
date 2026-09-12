@@ -133,7 +133,9 @@ ${emailForm.message}`)}`;
           </div>
 
           <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 'var(--text-hero)', color: 'var(--color-text)', lineHeight: '1.2' }}>
-            Hello, I'm <span style={{ color: 'var(--color-neon-cyan)', textShadow: 'var(--glow-cyan)' }}>Ali Abdullah</span>
+            Hello, I&apos;m{' '}
+            {/* data-text feeds the two offset copies the glitch layers render */}
+            <span className="glitch" data-text={resumeData.name}>{resumeData.name}</span>
           </h1>
 
           <p className="hero-lead" style={{ fontSize: 'var(--text-lead)', color: 'var(--color-text)', lineHeight: '1.7' }}>

@@ -331,6 +331,69 @@ body {
   line-height: 1.7;
 }
 
+/* The name, glitched. The theme has promised this since the first commit —
+   there was a glitch-skew keyframe sitting unused in the sheet — but the hero
+   never actually did anything. Two offset copies in magenta and green sit under
+   the cyan original and fire in clipped bands for ~0.6s every 7s, and
+   continuously on hover.
+
+   The whole effect is scoped to no-preference. The pseudo-elements are only
+   created there, so a reduced-motion visitor gets clean cyan text rather than
+   three stacked copies frozen mid-glitch by the blanket animation override. */
+.glitch {
+  position: relative;
+  display: inline-block;
+  color: var(--color-neon-cyan);
+  text-shadow: var(--glow-cyan);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .glitch::before,
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    text-shadow: none;
+  }
+
+  .glitch::before {
+    color: var(--color-neon-magenta);
+    animation: glitch-fire-a 7s steps(1, end) infinite;
+  }
+
+  .glitch::after {
+    color: var(--color-neon-green);
+    animation: glitch-fire-b 7s steps(1, end) infinite;
+  }
+
+  .glitch:hover::before {
+    animation: glitch-fire-a 0.45s steps(1, end) infinite;
+  }
+
+  .glitch:hover::after {
+    animation: glitch-fire-b 0.45s steps(1, end) infinite;
+  }
+}
+
+/* Idle for most of the cycle, then a short burst of clipped bands */
+@keyframes glitch-fire-a {
+  0%, 91%, 100% { opacity: 0; transform: none; clip-path: inset(0 0 100% 0); }
+  92% { opacity: 1; transform: translate(-3px, -1px); clip-path: inset(8% 0 74% 0); }
+  94% { opacity: 1; transform: translate(3px, 1px); clip-path: inset(58% 0 28% 0); }
+  96% { opacity: 1; transform: translate(-2px, 0); clip-path: inset(34% 0 50% 0); }
+  98% { opacity: 1; transform: translate(2px, -1px); clip-path: inset(76% 0 10% 0); }
+}
+
+@keyframes glitch-fire-b {
+  0%, 91%, 100% { opacity: 0; transform: none; clip-path: inset(0 0 100% 0); }
+  92% { opacity: 1; transform: translate(3px, 1px); clip-path: inset(66% 0 18% 0); }
+  94% { opacity: 1; transform: translate(-3px, -1px); clip-path: inset(20% 0 62% 0); }
+  96% { opacity: 1; transform: translate(2px, 1px); clip-path: inset(46% 0 40% 0); }
+  98% { opacity: 1; transform: translate(-2px, 0); clip-path: inset(4% 0 84% 0); }
+}
+
 /* Hero telemetry. Replaces a row of stat cards — the generic portfolio move,
    and it was restating claims rather than saying anything. This is a live
    readout: real local time at the node, current post, current status. */

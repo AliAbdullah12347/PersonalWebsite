@@ -162,7 +162,7 @@ ${emailForm.message}`)}`;
           <div 
             style={{ 
               display: 'grid', 
-              gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', 
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(130px, 100%), 1fr))', 
               gap: 'var(--space-md)', 
               marginTop: 'var(--space-lg)',
               borderTop: '1px solid var(--color-border)',
@@ -323,7 +323,7 @@ ${emailForm.message}`)}`;
       </section>
 
       {/* 5. SKILLS, EDUCATION & CERTIFICATIONS GRID */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 'var(--space-md)' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: 'var(--space-md)' }}>
         
         <section id="skills" className="cyber-panel cut-corners reveal">
           <div className="panel-header">
@@ -426,7 +426,7 @@ ${emailForm.message}`)}`;
           <span style={{ fontSize: 'var(--text-xs)', color: 'var(--color-neon-cyan)' }}>PERSONAL DIRECTORY</span>
         </div>
         <div className="panel-body" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-lg)' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 'var(--space-md)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(300px, 100%), 1fr))', gap: 'var(--space-md)' }}>
             
             {/* Table Tennis */}
             <div className="hobby-card">
@@ -486,7 +486,7 @@ ${emailForm.message}`)}`;
             <span>Let's Connect</span>
           </div>
         </div>
-        <div className="panel-body" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 'var(--space-xl)' }}>
+        <div className="panel-body" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(300px, 100%), 1fr))', gap: 'var(--space-xl)' }}>
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
             <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: 'var(--text-lg)', color: 'var(--color-neon-cyan)' }}>

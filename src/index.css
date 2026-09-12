@@ -609,7 +609,7 @@ input:checked + .switch-slider:before {
 /* System Stats */
 .sys-status-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
   gap: var(--space-md);
   font-size: var(--text-sm);
 }
@@ -701,7 +701,7 @@ input:checked + .switch-slider:before {
 
 .project-grid-bento {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
   gap: var(--space-md);
 }
 
@@ -1140,7 +1140,7 @@ input:checked + .switch-slider:before {
 /* Modal — metadata strip */
 .project-meta-strip {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
   gap: var(--space-md);
   border: 1px solid var(--color-border);
   border-left: 3px solid var(--color-neon-cyan);
@@ -1171,7 +1171,7 @@ input:checked + .switch-slider:before {
 
 .threat-score-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
   gap: var(--space-md);
 }
 

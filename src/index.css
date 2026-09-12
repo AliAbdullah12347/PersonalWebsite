@@ -1134,15 +1134,17 @@ textarea.input {
 }
 
 /* TERMINAL */
+/* Fills the mainframe instead of sitting at a fixed 550px, so a tall window
+   gets a tall shell rather than a letterboxed box with dead space beneath it. */
 .terminal-container {
-  flex-grow: 1;
+  flex: 1;
   background: rgba(6, 6, 10, 0.95);
   border: 1px solid var(--color-border);
   box-shadow: var(--panel-shadow);
   display: flex;
   flex-direction: column;
   position: relative;
-  min-height: 550px;
+  min-height: min(560px, 70vh);
 }
 
 .terminal-header {
@@ -1174,14 +1176,16 @@ textarea.input {
 .terminal-body {
   padding: var(--space-md);
   overflow-y: auto;
-  flex-grow: 1;
+  flex: 1;
+  /* Without this a flex child refuses to shrink below its content, so the
+     scroll never engages and the box just grows instead. */
+  min-height: 0;
   font-family: var(--font-body);
   font-size: var(--text-sm);
   color: var(--color-neon-green);
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
-  max-height: 600px;
 }
 
 .terminal-line {
